@@ -38,3 +38,7 @@ def postsign(request):
 def logout(request):
   auth.logout(request)
   return render(request, 'signin.html')
+
+def signUp(request):
+
+  return render(request, "signUp.html")
