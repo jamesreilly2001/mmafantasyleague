@@ -3,10 +3,22 @@
 <head>
     <meta charset=""UTF-8>
     <Title>Welcome</Title>
+    <style>
+        div{
+        position: absolute;
+        right: 10px;
+        top: 5px;
+        }
+    </style>
 </head>
 <body>
-    {% csrf_token %}
-    welcome {{e}}
+    
+   
 
+<div>
+<button type="button" onclick="location.href='{% url 'log' %}'">Logout</button>
+    </div>
+
+welcome {{e}}
 </body>
 </html>
