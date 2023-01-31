@@ -17,10 +17,14 @@ firebase = pyrebase.initialize_app(config)
 
 auth = firebase.auth()
 
-def signIn(request):
+def signIn(request): 
 
     return render(request,"signIn.html")
 
 def postsign(request):
+  email = request.POST.get('email')
+  passw = request.POST.get("pass")
 
-    return render(request, "welcome.html")
+  user = auth.sign_in_with_email_and_password(email,passw)
+
+  return render(request, "welcome.html",{"e":email})
