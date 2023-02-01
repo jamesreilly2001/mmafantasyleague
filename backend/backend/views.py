@@ -50,11 +50,11 @@ def postsignup(request):
  passw=request.POST.get('pass')
  try:
    user=authe.create_user_with_email_and_password(email,passw)
-   uid = user['localId']
-   data={"name":name,"status":"1"}
-   database.child("users").child(uid).child("details").set(data)
  except:
    message="Unable to create account try again"
    return render(request,"signup.html",{"messg":message})
- 
+   uid = user['locald']
+ data={"name":name,"status":"1"}
+ database.child("users").child(uid).child("details").set(data)
+
  return render(request,"signIn.html")
