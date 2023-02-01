@@ -10,13 +10,17 @@
     <Title>Sign In</Title>
 </head>
 <body>
-<form action="postsign" method="post">
-    {% csrf_token %}   
-    Email : 
-    <input type="email" name="email">
-    Password : 
-    <input type="password" name="pass">
+<form action="postsignUp" method="post">
+    {% csrf_token %}
+    Name :
+    <input type="text" name="name"><br><br>
 
+    Email : 
+    <input type="email" name="email"><br><br>
+    Password : 
+    <input type="password" name="pass"><br>
+
+    <button type="button" onclick="location.href='{% url 'signIn' %}'">Sign up</button>
 </form>
 </body>
 </html>
