@@ -1,5 +1,4 @@
 from django.shortcuts import render
-
 import pyrebase
 from django.contrib import auth 
 
@@ -50,14 +49,14 @@ def postsignup(request):
  name=request.POST.get('name')
  email=request.POST.get('email')
  passw=request.POST.get('pass')
- uid = None
+ 
  try:
    user=authe.create_user_with_email_and_password(email,passw)
+   uid = user['localId']
+   data={"name":name,"status":"1"}
+   database.child("users").child(uid).child("details").set(data)
  except:
    message="Unable to create account try again"
    return render(request,"signup.html",{"messg":message})
-   uid = user['locald']
- data={"name":name,"status":"1"}
- database.child("users").child(uid).child("details").set(data)
 
  return render(request,"signIn.html")
