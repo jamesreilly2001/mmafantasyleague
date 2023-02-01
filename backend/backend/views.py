@@ -37,7 +37,10 @@ def postsign(request):
   return render(request, "welcome.html",{"e":email})
 
 def logout(request):
-  auth.logout(request)
+  try:
+    del request.session['uid']
+  except KeyError:
+    pass
   return render(request, 'signin.html')
 
 def signUp(request):
