@@ -11,12 +11,13 @@ config ={
   'messagingSenderId': "837434946169",
   'appId': "1:837434946169:web:7a0210a7c523225e629aa8",
   'measurementId': "G-DRKKN38R7H",
-  'databaseURL': "",
+  'databaseURL': "https://mma-fantasy-league-94b6e-default-rtdb.firebaseio.com/",
 }
 
 firebase = pyrebase.initialize_app(config)
 
 authe = firebase.auth()
+database = firebase.database()
 
 def signIn(request): 
 
@@ -25,6 +26,7 @@ def signIn(request):
 def postsign(request):
   email = request.POST.get('email')
   passw = request.POST.get("pass")
+  
   try: 
     user = authe.sign_in_with_email_and_password(email,passw)
   except:
@@ -48,6 +50,7 @@ def postsignup(request):
  name=request.POST.get('name')
  email=request.POST.get('email')
  passw=request.POST.get('pass')
+ uid = None
  try:
    user=authe.create_user_with_email_and_password(email,passw)
  except:
