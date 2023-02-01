@@ -1,6 +1,7 @@
 from django.shortcuts import render
 import pyrebase
 from django.contrib import auth 
+from MMAfantasy import models
 
 config ={
   'apiKey': "AIzaSyD-_zfDFYhcZUDpTTaKS7I0YJahMaqiCLs",
@@ -63,3 +64,5 @@ def postsignup(request):
    return render(request,"signup.html",{"messg":message})
 
  return render(request,"signIn.html")
+
+
