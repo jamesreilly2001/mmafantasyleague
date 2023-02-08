@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <header style="background-color: red; text-align: center;">
+        <h1 style="color: white; text-shadow: 1px 1px black;">UFC Fantasy League</h1>
+      </header>
+<head>
+    
+    <meta charset=""UTF-8>
+    <Title>Welcome {{e}}</Title>
+    <style>
+        div{
+        position: absolute;
+        right: 10px;
+        top: 5px;
+        }
+    </style>
+</head>
+<body>
+    
+   
+
+<div>
+<button type="button" onclick="location.href='{% url 'signIn' %}'">Logout</button>
+</div>
+
+welcome {{e}}<br><br>
+<h1>UFC 284 Betting</h1>
+  <form action="/bet" method="post">
+    {% csrf_token %}
+    {% for fight in fights %}
+    <div>
+      <h2>{{ fight.title }}</h2>
+      <input type="radio" id="{{ fight.fighter1.name }}" name="{{ fight.id }}" value="{{ fight.fighter1.id }}">
+      <label for="{{ fight.fighter1.name }}">{{ fight.fighter1.name }}</label>
+      <input type="radio" id="{{ fight.fighter2.name }}" name="{{ fight.id }}" value="{{ fight.fighter2.id }}">
+      <label for="{{ fight.fighter2.name }}">{{ fight.fighter2.name }}</label>
+    </div>
+    {% endfor %}
+    <input type="submit" value="Submit Bet">
+  </form>
+</body>
+</html>
+
+
