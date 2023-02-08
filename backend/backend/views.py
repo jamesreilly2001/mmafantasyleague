@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import pyrebase
 from django.contrib import auth 
 from MMAfantasy import models
@@ -37,6 +37,17 @@ def postsign(request):
   request.session['uid']=str(session_id)
   return render(request, "welcome.html",{"e":email})
 
+def choosefighters(request):
+    if 'uid' in request.session:
+        id_token = request.session['uid']
+        try:
+            decoded_token = auth.verify_id_token(id_token)
+            return render(request, "choosefighters.html")
+        except Exception as e:
+            print(str(e))
+            return redirect('signIn')
+    else:
+        return redirect('signIn')
 def logout(request):
   try:
     del request.session['uid']

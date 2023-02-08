@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+    <header style="background-color: red; text-align: center;">
+        <h1 style="color: white; text-shadow: 1px 1px black;">UFC Fantasy League</h1>
+      </header>
 <head>
+    
     <meta charset=""UTF-8>
     <Title>Welcome</Title>
     <style>
@@ -19,6 +23,8 @@
 <button type="button" onclick="location.href='{% url 'signIn' %}'">Logout</button>
 </div>
 
-welcome my friend{{e}}
+welcome {{e}}<br><br>
+<button type="button" onclick="location.href='{% url 'choosefighters' %}'">Choose Fighters</button>
+
 </body>
 </html>
