@@ -79,3 +79,41 @@ def postsignup(request):
  return render(request,"signIn.html")
 
 
+def create_league(request):
+    if 'uid' in request.session:
+        id_token = request.session['uid']
+        try:
+            return render(request, "create_league.html")
+        except Exception as e:
+            print(str(e))
+            return redirect('signIn')
+    else:
+        return redirect('signIn')
+
+def post_create_league(request):
+    name = request.POST.get('name')
+    owner = request.session['uid']
+    members = [owner]
+    data = {"name": name, "owner": owner, "members": members}
+    database.child("leagues").push(data)
+    return redirect('choosefighters')
+
+def join_league(request):
+    if 'uid' in request.session:
+        id_token = request.session['uid']
+        try:
+            leagues = database.child("leagues").get().val()
+            return render(request, "join_league.html", {"leagues": leagues})
+        except Exception as e:
+            print(str(e))
+            return redirect('signIn')
+    else:
+        return redirect('signIn')
+
+def post_join_league(request):
+    league_id = request.POST.get('league_id')
+    user = request.session['uid']
+    league = database.child("leagues").child(league_id).get().val()
+    league["members"].append(user)
+    database.child("leagues").child(league_id).set(league)
+    return redirect('choosefighters')

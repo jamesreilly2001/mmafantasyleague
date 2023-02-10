@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Join a League</title>
+</head>
+<body>
+  <h1>Join a League</h1>
+  <form action="{% url 'join_league' %}" method="post">
+    {% csrf_token %}
+    <p>
+      <label for="league_id">League ID:</label>
+      <input type="text" id="league_id" name="league_id">
+    </p>
+    <p>
+      <input type="submit" value="Join League">
+    </p>
+  </form>
+</body>
+</html>

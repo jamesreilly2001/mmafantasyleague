@@ -5,7 +5,7 @@
       </header>
 <head>
     
-    <meta charset=""UTF-8>
+    <meta charset="UTF-8">
     <Title>Welcome</Title>
     <style>
         div{
@@ -16,15 +16,14 @@
     </style>
 </head>
 <body>
+    <div>
+        <button type="button" onclick="location.href='{% url 'signIn' %}'">Logout</button>
+    </div>
+    Welcome {{e}}<br><br>
+    <button type="button" onclick="location.href='{% url 'choosefighters' %}'">Choose Fighters</button>
+    <div>
+        <button type="button" onclick="location.href='{% url 'join_league' %}'">Join League</button>
+    </div>
     
-   
-
-<div>
-<button type="button" onclick="location.href='{% url 'signIn' %}'">Logout</button>
-</div>
-
-welcome {{e}}<br><br>
-<button type="button" onclick="location.href='{% url 'choosefighters' %}'">Choose Fighters</button>
-
 </body>
 </html>
