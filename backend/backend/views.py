@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 import pyrebase
 from django.contrib import auth 
 from MMAfantasy import models
+from google.oauth2 import id_token
+from google.auth.transport import requests
 
 config ={
   'apiKey': "AIzaSyD-_zfDFYhcZUDpTTaKS7I0YJahMaqiCLs",
@@ -41,7 +43,7 @@ def choosefighters(request):
     if 'uid' in request.session:
         id_token = request.session['uid']
         try:
-            decoded_token = auth.verify_id_token(id_token)
+            
             return render(request, "choosefighters.html")
         except Exception as e:
             print(str(e))
