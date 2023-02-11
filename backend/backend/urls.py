@@ -28,7 +28,8 @@ urlpatterns = [
     path('signup', views.signUp, name="signUp"),
     path('postsignup', views.postsignup, name="postsignup"),
     path('choosefighters', views.choosefighters, name="choosefighters"),
-    path('joinleague', views.join_league, name="joinleague" )
+    path('joinleague', views.joinleague, name="joinleague" ),
+    path('createleague',views.createleague, name="createleague")
 
 
 

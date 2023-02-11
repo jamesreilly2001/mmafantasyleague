@@ -5,7 +5,7 @@
 </head>
 <body>
   <h1>Join a League</h1>
-  <form action="{% url 'join_league' %}" method="post">
+  <form action="{% url 'joinleague' %}" method="post">
     {% csrf_token %}
     <p>
       <label for="league_id">League ID:</label>

@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 import pyrebase
-from django.contrib import auth 
 from MMAfantasy import models
 from google.oauth2 import id_token
 from google.auth.transport import requests
@@ -39,6 +38,7 @@ def postsign(request):
   request.session['uid']=str(session_id)
   return render(request, "welcome.html",{"e":email})
 
+
 def choosefighters(request):
     if 'uid' in request.session:
         id_token = request.session['uid']
@@ -50,6 +50,10 @@ def choosefighters(request):
             return redirect('signIn')
     else:
         return redirect('signIn')
+
+
+
+
 def logout(request):
   try:
     del request.session['uid']
@@ -79,11 +83,11 @@ def postsignup(request):
  return render(request,"signIn.html")
 
 
-def create_league(request):
+def createleague(request):
     if 'uid' in request.session:
         id_token = request.session['uid']
         try:
-            return render(request, "create_league.html")
+            return render(request, "createleague.html")
         except Exception as e:
             print(str(e))
             return redirect('signIn')
@@ -98,12 +102,12 @@ def post_create_league(request):
     database.child("leagues").push(data)
     return redirect('choosefighters')
 
-def join_league(request):
+def joinleague(request):
     if 'uid' in request.session:
         id_token = request.session['uid']
         try:
             leagues = database.child("leagues").get().val()
-            return render(request, "join_league.html", {"leagues": leagues})
+            return render(request, "joinleague.html", {"leagues": leagues})
         except Exception as e:
             print(str(e))
             return redirect('signIn')
