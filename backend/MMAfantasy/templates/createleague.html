@@ -1,3 +1,10 @@
+{% if messg %}
+<script>
+    alert('{{ messg }}');
+</script>
+{% endif %}
+
+
 <!DOCTYPE html>
 <html lang="en">
     <header style="background-color: red; text-align: center;">
@@ -5,7 +12,7 @@
     </header>
     <head>
         <meta charset="UTF-8">
-        <Title>Create league</Title>
+        <Title>Welcome {{e}}</Title>
         <style>
             div{
                 position: absolute;
@@ -15,24 +22,66 @@
         </style>
     </head>
     <body>
-      <div>
-        <button type="button" onclick="location.href='{% url 'signIn' %}'">Logout</button>
+       
+
+        <div>
+            <button type="button" onclick="location.href='{% url 'logout' %}'">Logout</button>
+        </div>
+        <h1>Enter league details</h1> 
+
+        <h4>Name of league</h4> 
+        <input id="enterName" type="text"> 
+
+        <h4>Enter unique password</h4> 
+        <input id="enterUniquepassword" type="password"> <br><br>
+
+        <h4>Max players</h4> 
+        <input id="enterMaxPlayers" type="number"> <br><br>
+
+        <button id="insert">INSERT</button>
     </div>
-  <h1>Create a League</h1>
-  <form action="{% url 'createleague' %}" method="post">
-    {% csrf_token %}
-    Signed in as  {{email}}
-    <p>
-      <label for="league_name">League Name:</label>
-      <input type="text" id="league_name" name="league_name">
-    </p>
-    <p>
-      <label for="max_players">Max Players:</label>
-      <input type="number" id="max_players" name="max_players">
-    </p>
-    <p>
-      <input type="submit" value="Create League">
-    </p>
-  </form>
+
+    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-firestore.js"></script>
+
+    <script>
+        // Initialize Firebase
+        var firebaseConfig = {
+  apiKey: "AIzaSyD-_zfDFYhcZUDpTTaKS7I0YJahMaqiCLs",
+  authDomain: "mma-fantasy-league-94b6e.firebaseapp.com",
+  databaseURL: "https://mma-fantasy-league-94b6e-default-rtdb.firebaseio.com",
+  projectId: "mma-fantasy-league-94b6e",
+  storageBucket: "mma-fantasy-league-94b6e.appspot.com",
+  messagingSenderId: "837434946169",
+  appId: "1:837434946169:web:7a0210a7c523225e629aa8",
+  measurementId: "G-DRKKN38R7H"
+};
+        firebase.initializeApp(firebaseConfig);
+
+        var db = firebase.firestore();
+
+        var enterName = document.querySelector("#enterName");
+        var enterUniquepassword = document.querySelector("#enterUniquepassword");
+        var enterMaxPlayers = document.querySelector("#enterMaxPlayers");
+
+
+        var insertBtn = document.querySelector("#insert");
+
+        function InsertData() {
+            db.collection("leagues").add({
+                name: enterName.value,
+                password: enterUniquepassword.value,
+                max_players: parseInt(enterMaxPlayers.value)
+            })
+            .then(function() {
+                alert("Data added successfully");
+            })
+            .catch(function(error) {
+                alert(error);
+            });
+        }
+
+        insertBtn.addEventListener('click', InsertData);
+    </script>
 </body>
 </html>

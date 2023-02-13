@@ -1,3 +1,11 @@
+{% if messg %}
+<script>
+    alert('{{ messg }}');
+</script>
+{% endif %}
+
+
+
 <!DOCTYPE html>
 <html lang="en">
     <header style="background-color: red; text-align: center;">
@@ -16,7 +24,7 @@
     </head>
     <body>
       <div>
-        <button type="button" onclick="location.href='{% url 'signIn' %}'">Logout</button>
+        <button type="button" onclick="location.href='{% url 'logout' %}'">Logout</button>
     </div>
         Signed in as {{email}}<br><br>
   <h1>Join a League</h1>

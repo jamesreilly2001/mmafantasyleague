@@ -55,18 +55,20 @@ def choosefighters(request):
        except Exception as e:
            print(str(e))
            return redirect('signIn')
-       else:
-           return redirect('signIn')
+    else:
+      message="You are logged out, to continue log back in!"
+      return render(request,"signIn.html", {"messg":message})
 
 
 
 
 def logout(request):
-  try:
-    del request.session['uid']
-  except KeyError:
-    pass
-  return render(request, 'signin.html')
+  if 'uid' in request.session:
+     try:
+       del request.session['uid']
+     except KeyError:
+       pass
+     return render(request, 'logout.html')
 
 def signUp(request):
 
@@ -101,7 +103,8 @@ def createleague(request):
             print(str(e))
             return redirect('signIn')
     else:
-        return redirect('signIn')
+      message="You are logged out, to continue log back in!"
+      return render(request,"signIn.html", {"messg":message})
 
 def post_create_league(request):
     name = request.POST.get('name')
@@ -123,7 +126,8 @@ def joinleague(request):
             print(str(e))
             return redirect('signIn')
     else:
-        return redirect('signIn')
+      message="You are logged out, to continue log back in!"
+      return render(request,"signIn.html", {"messg":message})
 
 def post_join_league(request):
     league_id = request.POST.get('league_id')
@@ -132,3 +136,8 @@ def post_join_league(request):
     league["members"].append(user)
     database.child("leagues").child(league_id).set(league)
     return redirect('choosefighters')
+
+
+def trying(request): 
+
+    return render(request,"trying.html")
