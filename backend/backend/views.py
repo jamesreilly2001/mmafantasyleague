@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 import pyrebase
 from MMAfantasy import models
-from google.oauth2 import id_token
-from google.auth.transport import requests
+from django.contrib import auth
 
 config ={
   'apiKey': "AIzaSyD-_zfDFYhcZUDpTTaKS7I0YJahMaqiCLs",
@@ -36,20 +35,28 @@ def postsign(request):
   print(user['idToken'])
   session_id=user['idToken']
   request.session['uid']=str(session_id)
+  request.session['email'] = email
+  request.session.save()
+  
+  print(email)
+
+  
   return render(request, "welcome.html",{"e":email})
 
 
 def choosefighters(request):
     if 'uid' in request.session:
-        id_token = request.session['uid']
-        try:
-            
-            return render(request, "choosefighters.html")
-        except Exception as e:
-            print(str(e))
-            return redirect('signIn')
-    else:
-        return redirect('signIn')
+       id_token = request.session['uid']
+
+       try:
+           email = request.session.get("email")
+           print(email)
+           return render(request, "choosefighters.html", {"email": email})
+       except Exception as e:
+           print(str(e))
+           return redirect('signIn')
+       else:
+           return redirect('signIn')
 
 
 
@@ -87,7 +94,9 @@ def createleague(request):
     if 'uid' in request.session:
         id_token = request.session['uid']
         try:
-            return render(request, "createleague.html")
+            email = request.session.get("email")
+            print(email)
+            return render(request, "createleague.html", {"email": email})
         except Exception as e:
             print(str(e))
             return redirect('signIn')
@@ -106,8 +115,10 @@ def joinleague(request):
     if 'uid' in request.session:
         id_token = request.session['uid']
         try:
+            email = request.session.get("email")
+            print(email)
             leagues = database.child("leagues").get().val()
-            return render(request, "joinleague.html", {"leagues": leagues})
+            return render(request, "joinleague.html",{"email": email} )
         except Exception as e:
             print(str(e))
             return redirect('signIn')

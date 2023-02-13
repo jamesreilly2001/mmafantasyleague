@@ -1,12 +1,27 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Create a League</title>
-</head>
-<body>
+<html lang="en">
+    <header style="background-color: red; text-align: center;">
+        <h1 style="color: white; text-shadow: 1px 1px black;">UFC Fantasy League</h1>
+    </header>
+    <head>
+        <meta charset="UTF-8">
+        <Title>Create league</Title>
+        <style>
+            div{
+                position: absolute;
+                right: 10px;
+                top: 5px;
+            }
+        </style>
+    </head>
+    <body>
+      <div>
+        <button type="button" onclick="location.href='{% url 'signIn' %}'">Logout</button>
+    </div>
   <h1>Create a League</h1>
   <form action="{% url 'createleague' %}" method="post">
     {% csrf_token %}
+    Signed in as  {{email}}
     <p>
       <label for="league_name">League Name:</label>
       <input type="text" id="league_name" name="league_name">

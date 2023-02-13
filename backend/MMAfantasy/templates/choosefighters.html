@@ -15,15 +15,19 @@
         </style>
     </head>
     <body>
+       
+
         <div>
             <button type="button" onclick="location.href='{% url 'signIn' %}'">Logout</button>
         </div>
-        Welcome {{e}}<br><br>
+        Signed in as {{email}}<br><br>
         <h1>UFC 284</h1>
         <h2>Islam Makhachev vs Alexander Volkanovski</h2>
         <input type="radio" id="Islam Makhachev" name="fight1" value="Islam Makhachev">
         <label for="Islam Makhachev">Islam Makhachev, 31, 23-1-0, Lightweight</label>
         <input type="radio" id="Alexander Volkanovski" name="fight1" value="Alexander Volkanovski">
         <label for="Alexander Volkanovski">Alexander Volkanovski, 34, 25-1-0, Featherweight</label>
+        
+
     </body>
 </html>

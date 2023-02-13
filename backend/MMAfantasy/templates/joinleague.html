@@ -1,9 +1,24 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Join a League</title>
-</head>
-<body>
+<html lang="en">
+    <header style="background-color: red; text-align: center;">
+        <h1 style="color: white; text-shadow: 1px 1px black;">UFC Fantasy League</h1>
+    </header>
+    <head>
+        <meta charset="UTF-8">
+        <Title>Join league</Title>
+        <style>
+            div{
+                position: absolute;
+                right: 10px;
+                top: 5px;
+            }
+        </style>
+    </head>
+    <body>
+      <div>
+        <button type="button" onclick="location.href='{% url 'signIn' %}'">Logout</button>
+    </div>
+        Signed in as {{email}}<br><br>
   <h1>Join a League</h1>
   <form action="{% url 'joinleague' %}" method="post">
     {% csrf_token %}
