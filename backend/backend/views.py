@@ -136,17 +136,22 @@ def postjoinleague(request):
         for key, league in leagues.items():# iterate over the key-value pairs in the dictionary
           print(key)
           if league['uniquecode'] == uniquecode:
-            members = league['members']
-            members.append(email)
-            database.child("leagues").child(key).update({"members": members})
-            league_found = True
-            break
+            if email in league['members']: # check if the user is already a member of the league
+                message = "You are already a member of this league."
+                return render(request, "joinleague.html", {"messg": message})
+            else:
+                members = league['members']
+                members.append(email)
+                database.child("leagues").child(key).update({"members": members})
+                league_found = True
+                break
         if league_found:
           return redirect('choosefighters',)
         else:
           message="The unique code you entered does not match any existing leagues. Please try again or create a new league."
           return render(request, "joinleague.html", {"messg":message})
     except:
+
         message="Unable to join the league. Please try again later."
         return render(request, "joinleague.html", {"messg":message})
   else:
