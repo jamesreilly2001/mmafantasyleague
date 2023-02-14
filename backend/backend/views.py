@@ -84,58 +84,76 @@ def postsignup(request):
    user=authe.create_user_with_email_and_password(email,passw)
    uid = user['localId']
    data={"name":name,"status":"1"}
-   database.child("users").child(uid).child("details").set(data)
+   database.child("users").child(name).child("details").set(data)
  except:
    message="Unable to create account try again"
    return render(request,"signup.html",{"messg":message})
 
  return render(request,"signIn.html")
 
+   
 
-def createleague(request):
-    if 'uid' in request.session:
-        id_token = request.session['uid']
-        try:
-            email = request.session.get("email")
-            print(email)
-            return render(request, "createleague.html", {"email": email})
-        except Exception as e:
-            print(str(e))
-            return redirect('signIn')
-    else:
-      message="You are logged out, to continue log back in!"
-      return render(request,"signIn.html", {"messg":message})
+def createleague(request): 
+    email = request.session.get("email")
+    return render(request,"createleague.html",{"email": email})
 
-def post_create_league(request):
-    name = request.POST.get('name')
-    owner = request.session['uid']
-    members = [owner]
-    data = {"name": name, "owner": owner, "members": members}
-    database.child("leagues").push(data)
-    return redirect('choosefighters')
 
-def joinleague(request):
-    if 'uid' in request.session:
-        id_token = request.session['uid']
-        try:
-            email = request.session.get("email")
-            print(email)
-            leagues = database.child("leagues").get().val()
-            return render(request, "joinleague.html",{"email": email} )
-        except Exception as e:
-            print(str(e))
-            return redirect('signIn')
-    else:
-      message="You are logged out, to continue log back in!"
-      return render(request,"signIn.html", {"messg":message})
+def postcreateleague(request):
+  if 'uid' in request.session:
+    id_token = request.session['uid']
+    try:
+        leaguename = request.POST.get('leaguename')
+        uniquecode = request.POST.get('uniquecode')
+        owner = request.session.get("email")
+        members = [owner]
+        data = {"leaguename": leaguename, "owner": owner, "members": members, "uniquecode": uniquecode}
+        database.child("leagues").push(data)
+        print(uniquecode)
+        print(leaguename)
+        return redirect('choosefighters',)
+    except:
+        message="Unable to create account try again"
+        return render(request,"signup.html",{"messg":message})
+  else:
+        message="You are logged out, to continue log back in!"
+        return render(request,"signIn.html", {"messg":message})
 
-def post_join_league(request):
-    league_id = request.POST.get('league_id')
-    user = request.session['uid']
-    league = database.child("leagues").child(league_id).get().val()
-    league["members"].append(user)
-    database.child("leagues").child(league_id).set(league)
-    return redirect('choosefighters')
+
+def joinleague(request): 
+    email = request.session.get("email")   
+    return render(request,"joinleague.html",{"email": email})
+
+
+
+def postjoinleague(request):
+  if 'uid' in request.session:
+    id_token = request.session['uid']
+    try:
+        uniquecode = request.POST.get('uniquecode')
+        email = request.session.get("email")
+        leagues = database.child("leagues").get().val() # get the league information dictionary
+        league_found = False
+        for key, league in leagues.items():# iterate over the key-value pairs in the dictionary
+          print(key)
+          if league['uniquecode'] == uniquecode:
+            members = league['members']
+            members.append(email)
+            database.child("leagues").child(key).update({"members": members})
+            league_found = True
+            break
+        if league_found:
+          return redirect('choosefighters',)
+        else:
+          message="The unique code you entered does not match any existing leagues. Please try again or create a new league."
+          return render(request, "joinleague.html", {"messg":message})
+    except:
+        message="Unable to join the league. Please try again later."
+        return render(request, "joinleague.html", {"messg":message})
+  else:
+    message="You are logged out, please log back in to join a league."
+    return render(request, "signIn.html", {"messg":message})
+
+
 
 
 def trying(request): 

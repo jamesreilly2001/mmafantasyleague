@@ -29,7 +29,10 @@ urlpatterns = [
     path('postsignup', views.postsignup, name="postsignup"),
     path('choosefighters', views.choosefighters, name="choosefighters"),
     path('joinleague', views.joinleague, name="joinleague" ),
-    path('createleague',views.createleague, name="createleague")
+    path('postjoinleague', views.postjoinleague, name="postjoinleague" ),
+    path('createleague',views.createleague, name="createleague"),
+    path('postcreateleague',views.postcreateleague, name="postcreateleague")
+
 
 
 

@@ -6,6 +6,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
     <header style="background-color: red; text-align: center;">
@@ -13,7 +14,7 @@
     </header>
     <head>
         <meta charset="UTF-8">
-        <Title>Join league</Title>
+        <Title>Welcome {{email}}</Title>
         <style>
             div{
                 position: absolute;
@@ -26,17 +27,13 @@
       <div>
         <button type="button" onclick="location.href='{% url 'logout' %}'">Logout</button>
     </div>
-        Signed in as {{email}}<br><br>
-  <h1>Join a League</h1>
-  <form action="{% url 'joinleague' %}" method="post">
-    {% csrf_token %}
-    <p>
-      <label for="league_id">League ID:</label>
-      <input type="text" id="league_id" name="league_id">
-    </p>
-    <p>
-      <input type="submit" value="Join League">
-    </p>
-  </form>
+    Signed in as {{email}}<br><br>
+    <form action="postjoinleague" method="post">
+      {% csrf_token %}
+      Unique code : 
+      <input type="text" name="uniquecode"><br><br>
+  
+      <input type="submit" value="Join">
+
 </body>
 </html>
