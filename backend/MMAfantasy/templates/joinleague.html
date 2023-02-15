@@ -25,29 +25,12 @@
       <div>
         <button type="button" onclick="location.href='{% url 'logout' %}'">Logout</button>
     </div>
-    <table>
-        <thead>
-          <tr>
-            <th>League</th>
-            <th>Member</th>
-            <th>Score</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for league in data %}
-          <tr>
-            <td>{{ league.name }}</td>
-            <td></td>
-            <td></td>
-          </tr>
-          {% for member in league.members %}
-          <tr>
-            <td></td>
-            <td>{{ member.name }} ({{ member.email }})</td>
-            <td>{{ member.score }}</td>
-          </tr>
-          {% endfor %}
-          {% endfor %}
+    <form action="postjoinleague" method="post">
+      {% csrf_token %}
+      Unique code : 
+      <input type="text" name="uniquecode"><br><br>
+  
+      <input type="submit" value="Join">
         </tbody>
     </table>
     </body>

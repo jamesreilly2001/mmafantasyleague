@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 import pyrebase
 from MMAfantasy import models
-from django.contrib import auth
+from firebase_admin import auth
 
 config ={
   'apiKey': "AIzaSyD-_zfDFYhcZUDpTTaKS7I0YJahMaqiCLs",
@@ -134,11 +134,10 @@ def postjoinleague(request):
         leagues = database.child("leagues").get().val() # get the league information dictionary
         league_found = False
         for key, league in leagues.items():# iterate over the key-value pairs in the dictionary
-          print(key)
           if league['uniquecode'] == uniquecode:
             if email in league['members']: # check if the user is already a member of the league
                 message = "You are already a member of this league."
-                return render(request, "joinleague.html", {"messg": message})
+                return render(request, "welcome.html", {"messg": message})
             else:
                 members = league['members']
                 members.append(email)
@@ -162,16 +161,33 @@ def postjoinleague(request):
 
 
 def leaguetable(request):
-    leagues = database.child("leagues").get().val()
-    leagues_dict = dict(leagues)  # Convert to a dictionary
-    data = []
-    for league_id, league in leagues_dict.items():
-        league_data = {'name': league['leaguename'], 'members': []}
-        for member in league['members']:
-            if member is None:
-                continue
-            league_data['members'].append(member)
-        data.append(league_data)
-    return render(request, 'leaguetable.html', {'data': data})
-
+  if 'uid' in request.session:
+    id_token = request.session['uid']
+    email = request.session.get("email")
+    try:
+      leagues = database.child("leagues").get().val()
+      leagues_dict = dict(leagues)  # Convert to a dictionary
+      data = []
+      for league_id, league in leagues_dict.items():
+           if 'members' in league and email in league['members']:
+              league_data = {'name': league['leaguename'], 'members': []}
+              for member in league['members']:
+                  if member is None:
+                      continue
+                  league_data['members'].append(member)
+              data.append(league_data)
+      
+      if not data:
+        message="You are not part of any leagues, join or create a league."
+        print(email)
+        return render(request, "welcome.html", {"messg":message})
+        
+      return render(request, 'leaguetable.html', {'data': data})
+      
+    except:
+      message="Error occurred."
+      return render(request, "joinleague.html", {"messg":message})
+  else:
+    message="You are logged out, to continue log back in!"
+    return render(request,"signIn.html")
 
