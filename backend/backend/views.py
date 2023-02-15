@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 import pyrebase
 from MMAfantasy import models
 from firebase_admin import auth
+from django.contrib import messages
 
 config ={
   'apiKey': "AIzaSyD-_zfDFYhcZUDpTTaKS7I0YJahMaqiCLs",
@@ -63,12 +64,17 @@ def choosefighters(request):
 
 
 def logout(request):
-  if 'uid' in request.session:
-     try:
-       del request.session['uid']
-     except KeyError:
-       pass
-     return render(request, 'logout.html')
+    if 'uid' in request.session:
+        email = request.session.get('email')
+        print(f"User ID in session: {request.session['uid']}")
+        print(email)
+        request.session.clear()  # clear the session
+        print(f"User ID in session after clearing: {request.session.get('uid')}")
+        print(email)
+        messages.success(request, "You have been logged out.")
+    else:
+        messages.warning(request, "You were not logged in.")
+    return redirect('signIn')
 
 def signUp(request):
 
@@ -134,10 +140,11 @@ def postjoinleague(request):
         leagues = database.child("leagues").get().val() # get the league information dictionary
         league_found = False
         for key, league in leagues.items():# iterate over the key-value pairs in the dictionary
+          print(key)
           if league['uniquecode'] == uniquecode:
             if email in league['members']: # check if the user is already a member of the league
                 message = "You are already a member of this league."
-                return render(request, "welcome.html", {"messg": message})
+                return render(request, "joinleague.html", {"messg": message})
             else:
                 members = league['members']
                 members.append(email)
@@ -145,19 +152,17 @@ def postjoinleague(request):
                 league_found = True
                 break
         if league_found:
-          return redirect('choosefighters',)
-        else:
+          return redirect('leaguetable')
+        if not league_found:
           message="The unique code you entered does not match any existing leagues. Please try again or create a new league."
           return render(request, "joinleague.html", {"messg":message})
     except:
 
-        message="Unable to join the league. Please try again later."
+        message="The unique code you entered does not match any existing leagues. Please try again or create a new league."
         return render(request, "joinleague.html", {"messg":message})
   else:
     message="You are logged out, please log back in to join a league."
     return render(request, "signIn.html", {"messg":message})
-
-
 
 
 def leaguetable(request):
