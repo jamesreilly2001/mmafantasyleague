@@ -31,7 +31,9 @@ urlpatterns = [
     path('joinleague', views.joinleague, name="joinleague" ),
     path('postjoinleague', views.postjoinleague, name="postjoinleague" ),
     path('createleague',views.createleague, name="createleague"),
-    path('postcreateleague',views.postcreateleague, name="postcreateleague")
+    path('postcreateleague',views.postcreateleague, name="postcreateleague"),
+    path('leaguetable',views.leaguetable, name="leaguetable")
+
 
 
 

@@ -161,6 +161,17 @@ def postjoinleague(request):
 
 
 
-def trying(request): 
+def leaguetable(request):
+    leagues = database.child("leagues").get().val()
+    leagues_dict = dict(leagues)  # Convert to a dictionary
+    data = []
+    for league_id, league in leagues_dict.items():
+        league_data = {'name': league['leaguename'], 'members': []}
+        for member in league['members']:
+            if member is None:
+                continue
+            league_data['members'].append(member)
+        data.append(league_data)
+    return render(request, 'leaguetable.html', {'data': data})
 
-    return render(request,"trying.html")
+

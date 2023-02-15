@@ -1,11 +1,9 @@
+<!-- HTML template -->
 {% if messg %}
 <script>
     alert('{{ messg }}');
 </script>
 {% endif %}
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,13 +25,30 @@
       <div>
         <button type="button" onclick="location.href='{% url 'logout' %}'">Logout</button>
     </div>
-    Signed in as {{email}}<br><br>
-    <form action="postjoinleague" method="post">
-      {% csrf_token %}
-      Unique code : 
-      <input type="text" name="uniquecode"><br><br>
-  
-      <input type="submit" value="Join">
-
-</body>
+    <table>
+        <thead>
+          <tr>
+            <th>League</th>
+            <th>Member</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for league in data %}
+          <tr>
+            <td>{{ league.name }}</td>
+            <td></td>
+            <td></td>
+          </tr>
+          {% for member in league.members %}
+          <tr>
+            <td></td>
+            <td>{{ member.name }} ({{ member.email }})</td>
+            <td>{{ member.score }}</td>
+          </tr>
+          {% endfor %}
+          {% endfor %}
+        </tbody>
+    </table>
+    </body>
 </html>

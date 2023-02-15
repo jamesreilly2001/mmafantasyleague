@@ -1,0 +1,47 @@
+{% if messg %}
+<script>
+    alert('{{ messg }}');
+</script>
+{% endif %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <header style="background-color: red; text-align: center;">
+        <h1 style="color: white; text-shadow: 1px 1px black;">UFC Fantasy League</h1>
+    </header>
+    <head>
+        <meta charset="UTF-8">
+        <Title>League table</Title>
+        <style>
+            div{
+                position: absolute;
+                right: 10px;
+                top: 5px;
+            }
+        </style>
+    </head>
+<body>
+    <div>
+        <button type="button" onclick="location.href='{% url 'logout' %}'">Logout</button>
+    </div>
+
+	{% for league in data %}
+		<h1>The {{ league.name }} league </h1>
+		<table>
+			<thead>
+				<tr>
+					<th>Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for member in league.members %}
+					<tr>
+						<td>{{ member}}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endfor %}
+</body>
+</html>
