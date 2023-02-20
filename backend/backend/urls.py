@@ -32,7 +32,9 @@ urlpatterns = [
     path('postjoinleague', views.postjoinleague, name="postjoinleague" ),
     path('createleague',views.createleague, name="createleague"),
     path('postcreateleague',views.postcreateleague, name="postcreateleague"),
-    path('leaguetable',views.leaguetable, name="leaguetable")
+    path('leaguetable',views.leaguetable, name="leaguetable"),
+    path('save_choices',views.save_choices, name="save_choices")
+
 
 
 

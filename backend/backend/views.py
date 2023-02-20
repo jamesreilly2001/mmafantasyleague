@@ -3,6 +3,8 @@ import pyrebase
 from MMAfantasy import models
 from firebase_admin import auth
 from django.contrib import messages
+from django.http import HttpResponseRedirect
+
 
 config ={
   'apiKey': "AIzaSyD-_zfDFYhcZUDpTTaKS7I0YJahMaqiCLs",
@@ -27,9 +29,13 @@ def signIn(request):
 def postsign(request):
   email = request.POST.get('email')
   passw = request.POST.get("pass")
+  name = request.session.get('name')
+  print(name)
+
   
   try: 
     user = authe.sign_in_with_email_and_password(email,passw)
+    
   except:
     message="Invalid Credentials."
     return render(request,"signIn.html", {"messg":message})
@@ -37,29 +43,64 @@ def postsign(request):
   session_id=user['idToken']
   request.session['uid']=str(session_id)
   request.session['email'] = email
-  request.session.save()
-  
-  print(email)
 
   
   return render(request, "welcome.html",{"e":email})
 
 
+# Define the view for the UFC Fight Night form
 def choosefighters(request):
+  
+  return render(request, "choosefighters.html")
+
+
+def save_choices(request):
     if 'uid' in request.session:
-       id_token = request.session['uid']
+        name=request.session.get('name')
+        email=request.session.get('email')
+        print(name)
+        print(email)
+        print
+        if request.method == 'POST':
+            andradre_blanchfield = request.POST.get('andradre-blanchfield')
+            wright_pauga = request.POST.get('wright-pauga')
+            parisian_pogues = request.POST.get('parisian-pogues')
+            knight_prachnio = request.POST.get('knight-prachnio')
+            miller_hernandez = request.POST.get('miller-hernandez')
+            sadykhov_elder = request.POST.get('sadykhov-elder')
+            lansberg_silva = request.POST.get('lansberg_silva')
+            emmers_askabov = request.POST.get('emmers-askhabov')
+            preux_lins = request.POST.get('preux-lins')
+            fletcher_gorimbo = request.POST.get('fletcher-gorimbo')
+            carpenter_ronderos = request.POST.get('carpenter-ronderos')
+            if andradre_blanchfield and wright_pauga and parisian_pogues and knight_prachnio and miller_hernandez and sadykhov_elder and lansberg_silva and emmers_askabov and preux_lins and fletcher_gorimbo and carpenter_ronderos:
+                # Save the selected fighters to the database
+                data={
+                    'andradre-blanchfield': andradre_blanchfield,
+                    'wright-pauga': wright_pauga,
+                    'parisian-pogues': parisian_pogues,
+                    'knight-prachnio': knight_prachnio,
+                    'miller-hernandez': miller_hernandez,
+                    'sadykhov-elder': sadykhov_elder,
+                    'lansberg-silva': lansberg_silva,
+                    'emmers-askabov': emmers_askabov,
+                    'preux-lins': preux_lins,
+                    'fletcher-gorimbo': fletcher_gorimbo,
+                    'carpenter-ronderos': carpenter_ronderos,
+                }
+                database.child("users").child(name).child("fighter selections").set(data)
 
-       try:
-           email = request.session.get("email")
-           print(email)
-           return render(request, "choosefighters.html", {"email": email})
-       except Exception as e:
-           print(str(e))
-           return redirect('signIn')
+                message = "Fighter choices saved"
+                return render(request, "choosefighters.html", {"messg": message})
+            else:
+                message = "Please select fighters for all fights"
+                return render(request, "choosefighters.html", {"messg": message})
+        else:
+            message = "Invalid request method"
+            return render(request, "choosefighters.html", {"messg": message})
     else:
-      message="You are logged out, to continue log back in!"
-      return render(request,"signIn.html", {"messg":message})
-
+        message = "You are logged out, to continue log back in!"
+        return render(request, "signIn.html", {"messg": message})
 
 
 
@@ -86,12 +127,18 @@ def postsignup(request):
  email=request.POST.get('email')
  passw=request.POST.get('pass')
  
+ 
  try:
    user=authe.create_user_with_email_and_password(email,passw)
    uid = user['localId']
-   data={"name":name,"status":"1"}
+   data={"name":name,"email":email,"status":"1"}
    database.child("users").child(name).child("details").set(data)
- except:
+   request.session['name'] = name
+   request.session['email'] = email
+   request.session.save()
+   
+
+ except: 
    message="Unable to create account try again"
    return render(request,"signup.html",{"messg":message})
 
@@ -190,7 +237,7 @@ def leaguetable(request):
       return render(request, 'leaguetable.html', {'data': data})
       
     except:
-      message="Error occurred."
+      message="You are not part of any leagues, join or create a league."
       return render(request, "joinleague.html", {"messg":message})
   else:
     message="You are logged out, to continue log back in!"

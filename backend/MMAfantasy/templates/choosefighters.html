@@ -1,3 +1,14 @@
+{% if messg %}
+<script>
+    alert('{{ messg }}');
+</script>
+{% endif %}
+
+
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,15 +49,141 @@
   </div>
   <div class="content">
     {% block content %}{% endblock %}
-        </div>
-        <br><br>
-        <h1>UFC 284</h1>
-        <h2>Islam Makhachev vs Alexander Volkanovski</h2>
-        <input type="radio" id="Islam Makhachev" name="fight1" value="Islam Makhachev">
-        <label for="Islam Makhachev">Islam Makhachev, 31, 23-1-0, Lightweight</label>
-        <input type="radio" id="Alexander Volkanovski" name="fight1" value="Alexander Volkanovski">
-        <label for="Alexander Volkanovski">Alexander Volkanovski, 34, 25-1-0, Featherweight</label>
-        
+    </div>
+    <br><br>
+  <h1>UFC Fight Night Andradre v Blanchfield</h1><br><h1>Main Card</h1>
+  <form method="post" action="{% url 'save_choices' %}">
+    {% csrf_token %}
+    <h2>Andradre v Blanchfield</h2>
+    <ul>
+      <li>
+        <input type="radio" name="andradre-blanchfield" value="Jessica Andradre">
+        <label for="Jessica Andradre">Jessica Andradre</label>
+      </li>
+      <li>
+        <input type="radio" name="andradre-blanchfield" value="Erin Blanchfield">
+        <label for="Erin Blanchfield">Erin Blanchfield</label>
+      </li>
+    </ul>
+    <h2>Wright v Pauga</h2>
+    <ul>
+      <li>
+        <input type="radio" name="wright-pauga" value="Jordan Wright">
+        <label for="Jordan Wright">Jordan Wright</label>
+      </li>
+      <li>
+        <input type="radio" name="wright-pauga" value="Zac Pauga">
+        <label for="Zac Pauga">Zac Pauga</label>
+      </li>
+    </ul>
+    <h2>Parisisn v Pogues</h2>
+    <ul>
+      <li>
+        <input type="radio" name="parisian-pogues" value="Josh Parisian">
+        <label for="Josh Parisian">Josh Parisian</label>
+      </li>
+      <li>
+        <input type="radio" name="parisian-pogues" value="Jamal Pogues">
+        <label for="Jamal Pogues">Jamal Pogues</label>
+      </li>
+    </ul>
+    <h2>Knight v Prachnio</h2>
+    <ul>
+      <li>
+        <input type="radio" name="knight-prachnio" value="William Knight">
+        <label for="William Knight">William Knight</label>
+      </li>
+      <li>
+        <input type="radio" name="knight-prachnio" value="Marcin Prachnio">
+        <label for="Marcin Prachnio">Marcin Prachnio"</label>
+      </li>
+    </ul>
+    <h2>Miller v Hernandez</h2>
+    <ul>
+      <li>
+        <input type="radio" name="miller-hernandez" value="Jim Miller">
+        <label for="Jim Miller">Jim Miller</label>
+      </li>
+      <li>
+        <input type="radio" name="miller-hernandez" value="Alexander Hernandez">
+        <label for="Alexander Hernandez">Alexander Hernandez</label>
+      </li>
+    </ul><br>
+    <h1>Preliminary Card</h1><br>
+    <h2>Sadykhov v Elder</h2>
+    <ul>
+      <li>
+        <input type="radio" name="sadykhov-elder" value="Nazim Sadykhov">
+        <label for="Nazim Sadykhov">Nazim Sadykhov</label>
+      </li>
+      <li>
+        <input type="radio" name="sadykhov-elder" value="Evan Elder">
+        <label for="Evan Elder">Evan Elder</label>
+      </li>
+    </ul>
+    <h2>Lansberg v Silva</h2>
+    <ul>
+      <li>
+        <input type="radio" name="wlansberg-silva" value="Lina Lansberg">
+        <label for="Lina Lansberg">Lina Lansberg</label>
+      </li>
+      <li>
+        <input type="radio" name="wlansberg-silva" value="Mayra Bueno Silva">
+        <label for="Mayra Bueno Silva">Mayra Bueno Silva</label>
+      </li>
+    </ul>
+    <h2>Emmers v Askhabov</h2>
+    <ul>
+      <li>
+        <input type="radio" name="emmers-askhabov" value="Jamall Emmers">
+        <label for="Jamall Emmers">Jamall Emmers</label>
+      </li>
+      <li>
+        <input type="radio" name="emmers-askhabov" value="Khusein Askhabov">
+        <label for="Khusein Askhabov">Khusein Askhabov</label>
+      </li>
+    </ul>
+    <h2>Preux v Lins</h2>
+    <ul>
+      <li>
+        <input type="radio" name="preux-lins" value="Ovince Saint Preux">
+        <label for="Ovince Saint Preux">Ovince Saint Preux</label>
+      </li>
+      <li>
+        <input type="radio" name="preux-lins" value="Philipe Lins">
+        <label for="Philipe Lins">Philipe Lins</label>
+      </li>
+    </ul>
+    <h2>Fletcher v Gorimbo</h2>
+    <ul>
+      <li>
+        <input type="radio" name="fletcher-gorimbo" value="AJ Fletcher">
+        <label for="AJ Fletcher">AJ Fletcher</label>
+      </li>
+      <li>
+        <input type="radio" name="fletcher-gorimbo" value="Themba Gorimbo">
+        <label for="Themba Gorimbo">Themba Gorimbo</label>
+      </li>
+    </ul>
+    <h2>Carpenter v Ronderos</h2>
+    <ul>
+      <li>
+        <input type="radio" name="carpenter-ronderos" value="Clayton Carpenter">
+        <label for="Clayton Carpenter">Clayton Carpenter</label>
+      </li>
+      <li>
+        <input type="radio" name="carpenter-ronderos" value="Juancamilo Ronderos">
+        <label for="Juancamilo Ronderos">Juancamilo Ronderos</label>
+      </li>
+    </ul>
+    <input type="submit" value="Save Choices">
+  </form>
+</body>
+</html>
 
-    </body>
+
+
+
+
+
 </html>
