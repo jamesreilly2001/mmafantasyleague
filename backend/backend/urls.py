@@ -33,7 +33,13 @@ urlpatterns = [
     path('createleague',views.createleague, name="createleague"),
     path('postcreateleague',views.postcreateleague, name="postcreateleague"),
     path('leaguetable',views.leaguetable, name="leaguetable"),
-    path('save_choices',views.save_choices, name="save_choices")
+    path('save_choices',views.save_choices, name="save_choices"),
+    path('fighter_selection',views.fighter_selection, name="fighter_selection"),
+    path('home',views.home, name="home")
+    
+
+
+
 
 
 

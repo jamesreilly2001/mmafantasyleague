@@ -71,17 +71,49 @@
     <a href="/leaguetable">League Table</a>
 
   </div>
-  <div class="content">
-    {% block content %}{% endblock %}
-    </div>
-    <br><br>
-    <form action="postjoinleague" method="post">
-      {% csrf_token %}
-      Unique code : 
-      <input type="text" name="uniquecode"><br><br>
-  
-      <input type="submit" value="Join">
-        </tbody>
-    </table>
-    </body>
+    <head>
+        <title>Fighter Selections</title>
+        <style>
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+            th, td {
+                text-align: left;
+                padding: 8px;
+                border: 1px solid #ddd;
+            }
+            th {
+                background-color: #af4c4c;
+                color: white;
+            }
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+        </style>
+    </head>
+    <body>
+
+        <h1>Fighter Selections</h1>
+  {% if fighters_selected %}
+    <table>
+      <tr>
+        <th>Fight</th>
+        <th>Fighter Selection</th>
+      </tr>
+      {% for fight, fighter in fighters_selected.items %}
+        <tr>
+          <td>{{ fight }}</td>
+          <td>{{ fighter }}</td>
+        </tr>
+      {% endfor %}
+    </table><br>
+    
+  <a href="/choosefighters" id="choosefighters">Change my fighters</a>
+{% else %}
+  <p>No fighter selection found.</p> <br> <a href="/choosefighters" id="choosefighters">No fighter selection? Choose your fighters here</a>
+{% endif %}
+
+
+</body>
 </html>

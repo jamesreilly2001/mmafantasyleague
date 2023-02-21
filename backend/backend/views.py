@@ -4,6 +4,8 @@ from MMAfantasy import models
 from firebase_admin import auth
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.urls import reverse
+
 
 
 config ={
@@ -22,87 +24,35 @@ firebase = pyrebase.initialize_app(config)
 authe = firebase.auth()
 database = firebase.database()
 
+def postsignup(request):
+ 
+ name=request.POST.get('name')
+ email=request.POST.get('email')
+ passw=request.POST.get('pass')
+ 
+ 
+ try:
+   user=authe.create_user_with_email_and_password(email,passw)
+   uid = user['localId']
+   unique_name = str(name)
+   data={"name":name,"email":email,"status":"1"}
+   encoded_email = email.replace('.', ',')
+   database.child("users").child(encoded_email).child("details").set(data)
+   request.session['name'] = name
+   request.session['email'] = email
+   print(name)
+   request.session.save()
+   
+
+ except: 
+   message="Unable to create account try again"
+   return render(request,"signup.html",{"messg":message})
+
+ return render(request,"signIn.html")
+
 def signIn(request): 
 
     return render(request,"signIn.html")
-
-def postsign(request):
-  email = request.POST.get('email')
-  passw = request.POST.get("pass")
-  name = request.session.get('name')
-  print(name)
-
-  
-  try: 
-    user = authe.sign_in_with_email_and_password(email,passw)
-    
-  except:
-    message="Invalid Credentials."
-    return render(request,"signIn.html", {"messg":message})
-  print(user['idToken'])
-  session_id=user['idToken']
-  request.session['uid']=str(session_id)
-  request.session['email'] = email
-
-  
-  return render(request, "welcome.html",{"e":email})
-
-
-# Define the view for the UFC Fight Night form
-def choosefighters(request):
-  
-  return render(request, "choosefighters.html")
-
-
-def save_choices(request):
-    if 'uid' in request.session:
-        name=request.session.get('name')
-        email=request.session.get('email')
-        print(name)
-        print(email)
-        print
-        if request.method == 'POST':
-            andradre_blanchfield = request.POST.get('andradre-blanchfield')
-            wright_pauga = request.POST.get('wright-pauga')
-            parisian_pogues = request.POST.get('parisian-pogues')
-            knight_prachnio = request.POST.get('knight-prachnio')
-            miller_hernandez = request.POST.get('miller-hernandez')
-            sadykhov_elder = request.POST.get('sadykhov-elder')
-            lansberg_silva = request.POST.get('lansberg_silva')
-            emmers_askabov = request.POST.get('emmers-askhabov')
-            preux_lins = request.POST.get('preux-lins')
-            fletcher_gorimbo = request.POST.get('fletcher-gorimbo')
-            carpenter_ronderos = request.POST.get('carpenter-ronderos')
-            if andradre_blanchfield and wright_pauga and parisian_pogues and knight_prachnio and miller_hernandez and sadykhov_elder and lansberg_silva and emmers_askabov and preux_lins and fletcher_gorimbo and carpenter_ronderos:
-                # Save the selected fighters to the database
-                data={
-                    'andradre-blanchfield': andradre_blanchfield,
-                    'wright-pauga': wright_pauga,
-                    'parisian-pogues': parisian_pogues,
-                    'knight-prachnio': knight_prachnio,
-                    'miller-hernandez': miller_hernandez,
-                    'sadykhov-elder': sadykhov_elder,
-                    'lansberg-silva': lansberg_silva,
-                    'emmers-askabov': emmers_askabov,
-                    'preux-lins': preux_lins,
-                    'fletcher-gorimbo': fletcher_gorimbo,
-                    'carpenter-ronderos': carpenter_ronderos,
-                }
-                database.child("users").child(name).child("fighter selections").set(data)
-
-                message = "Fighter choices saved"
-                return render(request, "choosefighters.html", {"messg": message})
-            else:
-                message = "Please select fighters for all fights"
-                return render(request, "choosefighters.html", {"messg": message})
-        else:
-            message = "Invalid request method"
-            return render(request, "choosefighters.html", {"messg": message})
-    else:
-        message = "You are logged out, to continue log back in!"
-        return render(request, "signIn.html", {"messg": message})
-
-
 
 def logout(request):
     if 'uid' in request.session:
@@ -121,28 +71,139 @@ def signUp(request):
 
   return render(request, "signUp.html")
 
-def postsignup(request):
- 
- name=request.POST.get('name')
- email=request.POST.get('email')
- passw=request.POST.get('pass')
- 
- 
- try:
-   user=authe.create_user_with_email_and_password(email,passw)
-   uid = user['localId']
-   data={"name":name,"email":email,"status":"1"}
-   database.child("users").child(name).child("details").set(data)
-   request.session['name'] = name
-   request.session['email'] = email
-   request.session.save()
-   
+def home(request): 
+  if 'uid' in request.session:
+    return render(request,"welcome.html")
+  else:
+    message="You are logged out"
+    return render(request,"signIn.html", {"messg":message})
 
- except: 
-   message="Unable to create account try again"
-   return render(request,"signup.html",{"messg":message})
 
- return render(request,"signIn.html")
+def postsign(request):
+  email = request.POST.get('email')
+  passw = request.POST.get("pass")
+
+  try: 
+    user = authe.sign_in_with_email_and_password(email,passw)
+    
+  except:
+    message="Invalid Credentials."
+    return render(request,"signIn.html", {"messg":message})
+  session_id=user['idToken']
+  request.session['uid']=str(session_id)
+  request.session['email'] = email
+  request.session['name'] = user['displayName']  # <--- add this line
+  print(user['displayName'])
+  return render(request, "welcome.html", {"e":email})
+
+
+# Define the view for the UFC Fight Night form
+def choosefighters(request):
+  
+  return render(request, "choosefighters.html")
+
+
+def save_choices(request):
+    if 'uid' in request.session:
+        name=request.session.get('name')
+        email=request.session.get('email')
+        encoded_email = email.replace('.', ',')
+        print(name)
+        print(email)
+        print
+        if request.method == 'POST':
+            andradre_blanchfield = request.POST.get('andradre-blanchfield')
+            wright_pauga = request.POST.get('wright-pauga')
+            parisian_pogues = request.POST.get('parisian-pogues')
+            knight_prachnio = request.POST.get('knight-prachnio')
+            miller_hernandez = request.POST.get('miller-hernandez')
+            sadykhov_elder = request.POST.get('sadykhov-elder')
+            lansberg_silva = request.POST.get('lansberg-silva')
+            emmers_askhabov = request.POST.get('emmers-askhabov')
+            preux_lins = request.POST.get('preux-lins')
+            fletcher_gorimbo = request.POST.get('fletcher-gorimbo')
+            carpenter_ronderos = request.POST.get('carpenter-ronderos')
+            # Check if all fighters have been selected
+            if '' in [andradre_blanchfield, wright_pauga, parisian_pogues, knight_prachnio, miller_hernandez, sadykhov_elder, lansberg_silva, emmers_askhabov, preux_lins, fletcher_gorimbo, carpenter_ronderos]:
+                message = "Please select fighters for all fights"
+                return render(request, "choosefighters.html", {"messg": message})
+            else:
+                # Save the selected fighters to the database
+                data={
+                    'andradre-blanchfield': andradre_blanchfield,
+                    'wright-pauga': wright_pauga,
+                    'parisian-pogues': parisian_pogues,
+                    'knight-prachnio': knight_prachnio,
+                    'miller-hernandez': miller_hernandez,
+                    'sadykhov-elder': sadykhov_elder,
+                    'lansberg-silva': lansberg_silva,
+                    'emmers-askabov': emmers_askhabov,
+                    'preux-lins': preux_lins,
+                    'fletcher-gorimbo': fletcher_gorimbo,
+                    'carpenter-ronderos': carpenter_ronderos,
+                }
+                database.child("users").child(encoded_email).child("fighter selections").set(data)
+
+                message = "Fighter choices saved"
+                return render(request, "choosefighters.html", {"messg": message})
+        else:
+            message = "Invalid request method"
+            return render(request, "choosefighters.html", {"messg": message})
+    else:
+        message = "You are logged out, to continue log back in!"
+        return render(request, "signIn.html", {"messg": message})
+
+def fighter_selection(request):
+    if 'uid' in request.session:
+        email = request.session.get('email')
+        encoded_email = email.replace('.', ',')
+        fighters_selected = database.child("users").child(encoded_email).child("fighter selections").get().val()
+        return render(request, "fighter_selection.html", {'fighters_selected': fighters_selected})
+    else:
+        message = "You are logged out, to continue log back in!"
+        return render(request, "signIn.html", {"messg": message})
+
+
+def leaguetable(request):
+  if 'uid' in request.session:
+    id_token = request.session['uid']
+    email = request.session.get("email")
+    encoded_email = email.replace('.', ',')
+    try:
+      leagues = database.child("leagues").get().val()
+      leagues_dict = dict(leagues)  # Convert to a dictionary
+      data = []
+      for league_id, league in leagues_dict.items():
+          if 'members' in league and email in league['members']:
+              print('User is a member of league:', league['leaguename'])
+              league_data = {'name': league['leaguename'], 'members': []}
+              for member in league['members']:
+                  if member is None:
+                      continue
+                  print('Processing member:', member)
+                  member_data = {'name': member, 'fighter_selections_link': None}
+                  member_encoded_email = member.replace('.', ',')
+                  if database.child("users").child(member_encoded_email).child("fighter selections").get().val() is not None:
+                      member_data['fighter_selections_link'] = reverse('fighter_selection')
+                  league_data['members'].append(member_data)
+              data.append(league_data)
+      if not data:
+        message="You are not part of any leagues, join or create a league."
+        return render(request, "welcome.html", {"messg":message})
+        
+      return render(request, 'leaguetable.html', {'data': data})
+      
+    except:
+      message="You are not part of any leagues, join or create a league."
+      print( database.child("users").child(encoded_email).child("fighter selections").get().val() )
+      return render(request, "joinleague.html", {"messg":message})
+  else:
+    message="You are logged out, to continue log back in!"
+    return render(request,"signIn.html")
+
+
+
+
 
    
 
@@ -160,7 +221,7 @@ def postcreateleague(request):
         owner = request.session.get("email")
         members = [owner]
         data = {"leaguename": leaguename, "owner": owner, "members": members, "uniquecode": uniquecode}
-        database.child("leagues").push(data)
+        database.child("leagues").child(leaguename).set(data)
         print(uniquecode)
         print(leaguename)
         return redirect('choosefighters',)
@@ -211,35 +272,4 @@ def postjoinleague(request):
     message="You are logged out, please log back in to join a league."
     return render(request, "signIn.html", {"messg":message})
 
-
-def leaguetable(request):
-  if 'uid' in request.session:
-    id_token = request.session['uid']
-    email = request.session.get("email")
-    try:
-      leagues = database.child("leagues").get().val()
-      leagues_dict = dict(leagues)  # Convert to a dictionary
-      data = []
-      for league_id, league in leagues_dict.items():
-           if 'members' in league and email in league['members']:
-              league_data = {'name': league['leaguename'], 'members': []}
-              for member in league['members']:
-                  if member is None:
-                      continue
-                  league_data['members'].append(member)
-              data.append(league_data)
-      
-      if not data:
-        message="You are not part of any leagues, join or create a league."
-        print(email)
-        return render(request, "welcome.html", {"messg":message})
-        
-      return render(request, 'leaguetable.html', {'data': data})
-      
-    except:
-      message="You are not part of any leagues, join or create a league."
-      return render(request, "joinleague.html", {"messg":message})
-  else:
-    message="You are logged out, to continue log back in!"
-    return render(request,"signIn.html")
 
