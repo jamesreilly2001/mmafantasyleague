@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 import pyrebase
-from MMAfantasy import models
+
 from firebase_admin import auth
 from django.contrib import messages
 from django.http import HttpResponseRedirect
@@ -152,6 +152,80 @@ def save_choices(request):
     else:
         message = "You are logged out, to continue log back in!"
         return render(request, "signIn.html", {"messg": message})
+  
+def points_earned(request):
+    if 'uid' in request.session:
+        email = request.session.get('email')
+        encoded_email = email.replace('.', ',')
+        fighters_selected = database.child("users").child(encoded_email).child("fighter selections").get().val()
+        print(fighters_selected)
+        # Define a dictionary of the points awarded for each fighter in each match
+        total_points = 0
+        if 'andradre-blanchfield' in fighters_selected and fighters_selected['andradre-blanchfield'] == "Erin Blanchfield":
+          total_points = total_points + 4
+          secondfight = "Win"
+        else:
+          secondfight = "Loss"
+          
+        if 'wright-pauga' in fighters_selected and fighters_selected['wright-pauga'] == "Jordan Wright":
+          total_points = total_points + 4
+          firstfight = "Win"
+        else:
+          firstfight = "Loss"
+        if 'parisian-pogues' in fighters_selected and fighters_selected['parisian-pogues'] == "Jamal Pogues":
+          total_points = total_points + 4
+          thirdfight = "Win"
+        else:
+          thirdfight="Loss"
+        if 'knight-prachnio' in fighters_selected and fighters_selected['knight-prachnio'] == "Marchin Prachnio":
+            total_points = total_points + 4
+            fourthfight="WIN"
+        else:
+          fourthfight="Loss"
+        if 'miller-hernandez' in fighters_selected and fighters_selected['miller-hernandez'] == "Alexander Hernandez":
+          total_points = total_points + 4
+          fifthfight="Win"
+        else:
+          fifthfight="Loss"
+        if 'sadykhov-elder' in fighters_selected and fighters_selected['sadykhov-elder'] == "Nazim Sadykhov":
+            total_points = total_points + 4
+            sixthfight="Win"
+        else:
+            sixthfight="Loss"
+        if 'lansberg-silva' in fighters_selected and fighters_selected['lansberg-silva'] == "Mayra Bueno Silva":
+          total_points = total_points + 4
+          seventhfight="Win"
+        else:
+          seventhfight="Loss"
+        if 'emmers-askabov' in fighters_selected and fighters_selected['emmers-askabov'] == "Jamall Emmers":
+            total_points = total_points + 4
+            eightfight="Win"
+        else:
+            eightfight="Loss"
+        if 'preux-lins' in fighters_selected and fighters_selected['preux-lins'] == "Philipe Lins":
+          total_points = total_points + 4
+          ninthfight="Win"
+        else:
+          ninthfight="Loss"
+        if 'fletcher-gorimbo' in fighters_selected and fighters_selected['fletcher-gorimbo'] == "AJ Fletcher":
+            total_points = total_points + 4
+            tenthfight="Win"
+        else:
+            tenthfight="Loss"
+        if 'carpenter-ronderos' in fighters_selected and fighters_selected['carpenter-ronderos'] == "Clayton Carpenter":
+          total_points = total_points + 4
+          eleventhfight="Win"
+        else:
+          eleventhfight="Loss"
+        
+
+        print(total_points)
+        return render(request, "points_earned.html", {'total_points': total_points, 'firstfight': firstfight, 'secondfight': secondfight, 'thirdfight': thirdfight, 'fourthfight': fourthfight, 'fifthfight': fifthfight, 'sixthfight': sixthfight, 'seventhfight': seventhfight, 'eightfight': eightfight, 'ninthfight': ninthfight, 'tenthfight': tenthfight, 'eleventhfight': eleventhfight })
+    else:
+        message = "You are logged out, to continue log back in!"
+        return render(request, "signIn.html", {"messg": message})
+
+
 
 def fighter_selection(request):
     if 'uid' in request.session:
@@ -184,7 +258,7 @@ def leaguetable(request):
                   member_data = {'name': member, 'fighter_selections_link': None}
                   member_encoded_email = member.replace('.', ',')
                   if database.child("users").child(member_encoded_email).child("fighter selections").get().val() is not None:
-                      member_data['fighter_selections_link'] = reverse('fighter_selection')
+                      member_data['fighter_selections_link'] = reverse('membersselections')
                   league_data['members'].append(member_data)
               data.append(league_data)
       if not data:
@@ -240,36 +314,43 @@ def joinleague(request):
 
 
 def postjoinleague(request):
-  if 'uid' in request.session:
-    id_token = request.session['uid']
-    try:
-        uniquecode = request.POST.get('uniquecode')
-        email = request.session.get("email")
-        leagues = database.child("leagues").get().val() # get the league information dictionary
-        league_found = False
-        for key, league in leagues.items():# iterate over the key-value pairs in the dictionary
-          print(key)
-          if league['uniquecode'] == uniquecode:
-            if email in league['members']: # check if the user is already a member of the league
-                message = "You are already a member of this league."
-                return render(request, "joinleague.html", {"messg": message})
-            else:
-                members = league['members']
-                members.append(email)
-                database.child("leagues").child(key).update({"members": members})
-                league_found = True
-                break
-        if league_found:
-          return redirect('leaguetable')
-        if not league_found:
-          message="The unique code you entered does not match any existing leagues. Please try again or create a new league."
-          return render(request, "joinleague.html", {"messg":message})
-    except:
+    if 'uid' in request.session:
+        id_token = request.session['uid']
+        try:
+            uniquecode = request.POST.get('uniquecode')
+            email = request.session.get("email")
+            leagues = database.child("leagues").get().val() # get the league information dictionary
+            league_found = False
+            for key, league in leagues.items():# iterate over the key-value pairs in the dictionary
+                print("League key:", key)
+                print("League unique code:", league['uniquecode'])
+                print("League members:", league['members'])
+                if league['uniquecode'] == uniquecode:
+                    if email in league['members']: # check if the user is already a member of the league
+                        message = "You are already a member of this league."
+                        return render(request, "joinleague.html", {"messg": message})
+                    else:
+                        members = league['members']
+                        members.append(email)
+                        database.child("leagues").child(key).update({"members": members})
+                        league_found = True
+                        break
+            if league_found:
+                print("League found. Redirecting to leaguetable.")
+                return redirect('leaguetable')
+            if not league_found:
+                message="The unique code you entered does not match any existing leagues. Please try again or create a new league."
+                return render(request, "joinleague.html", {"messg":message})
+        except Exception as e:
+            print("Exception:", e)
+            message="The unique code you entered does not match any existing leagues. Please try again or create a new league."
+            return render(request, "joinleague.html", {"messg":message})
+    else:
+        message="You are logged out, please log back in to join a league."
+        return render(request, "signIn.html", {"messg":message})
 
-        message="The unique code you entered does not match any existing leagues. Please try again or create a new league."
-        return render(request, "joinleague.html", {"messg":message})
-  else:
-    message="You are logged out, please log back in to join a league."
-    return render(request, "signIn.html", {"messg":message})
 
 
+def membersselections(request):
+  
+  return render(request, "membersselections.html")

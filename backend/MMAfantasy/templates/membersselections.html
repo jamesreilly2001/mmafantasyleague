@@ -52,35 +52,6 @@
       background-color: #ddd;
       color: black;
     }
-    table {
-    border-collapse: collapse;
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    }
-    th, td {
-      text-align: left;
-      padding: 8px;
-      border: 1px solid #ddd;
-    }
-    th {
-      background-color: #f2f2f2;
-      font-weight: bold;
-    }
-    tr:nth-child(even) {
-      background-color: #f2f2f2;
-    }
-    tr:hover {
-      background-color: #ddd;
-    }
-    a {
-      text-decoration: none;
-      color: #0d6efd;
-      font-weight: bold;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
   </style>
 </head>
 <body>
@@ -100,39 +71,45 @@
     <a href="/leaguetable">League Table</a>
 
   </div>
-  <div class="content">
-    {% block content %}{% endblock %}
-    </div>
+    <head>
+        <title>Fighter Selections</title>
+        <style>
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+            th, td {
+                text-align: left;
+                padding: 8px;
+                border: 1px solid #ddd;
+            }
+            th {
+                background-color: #af4c4c;
+                color: white;
+            }
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+        </style>
+    </head>
+    <body>
 
-    {% for league in data %}
-    <div style="text-align: center;">
-      <h1>The {{ league.name }} league</h1>
-    </div>
-  <table class="center">
-    <thead>
+        <h1>Members Fighter Selections</h1>
+    <table>
       <tr>
-        <th>Name</th>
-        <th>Points</th>
+        <th>Fight</th>
+        <th>Fighter Selection</th>
       </tr>
-    </thead>
-    <tbody>
-      {% for member in league.members %}
+      {% for fight, fighter in fighters_selected.items %}
         <tr>
-          <td>{{ member.name }}</td>
-          {% if member%}
-            <td>0</a></td>
-          {% else %}
-            <td>No Selections Made</td>
-          {% endif %}
+          <td>{{ fight }}</td>
+          <td>{{ fighter }}</td>
         </tr>
       {% endfor %}
-    </tbody>
-  </table>
-  <br><br>
-{% endfor %}
+    </table><br>
+    
+  <a href="/leaguetable" id="choosefighters">Go back to League table</a>
 
 
-
-  
 </body>
 </html>
