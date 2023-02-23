@@ -1,0 +1,179 @@
+{% if messg %}
+<script>
+    alert('{{ messg }}');
+</script>
+{% endif %}
+
+
+
+
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<style>
+     label {
+    color: rgb(64, 54, 54);
+    font-weight: bold;
+    align: center;
+    display: block;
+}
+h2 {
+  display: inline-block; /* or display: block; if necessary */
+}
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/chFighter.css'%}">
+
+
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="left">
+                <div class="logo-container">
+                  <img src="{% static 'images/choosefighter.png' %}" alt="log">
+                </div>
+                <h1>UFC fantasy league</h1>
+            </div>
+            <div class="right">
+                <nav>
+                    {% if request.session.email %}
+                    <p>Logged in as {{ request.session.email }}</p>
+                    <a href="{% url 'logout' %}">Logout</a> {% else %}
+                    <p>You're not logged in</p>
+                    <a href="{% url 'signIn' %}">Sign In</a> {% endif %}
+                </nav>
+                <a class="get-start-btn" href="home">Home</a>
+            </div>
+        </div>
+    </div>
+    <main>
+        <div class="container">
+            <div class="content">
+                {% block content %}{% endblock %}
+            </div>
+            <br><br>
+            <div class="t-center">
+                <h1>Andradre v Blanchfield</h1>
+            </div>
+            <form method="post" action="{% url 'save_choices' %}"> 
+                {% csrf_token %}
+                <div class="wrapper">
+                    <div class="boxes-container">
+                        <h1>Jessica Andradre</h1>
+                        <div class="inner-container">
+                            <div class="box">
+                                <h2>Record</h2>
+                                <ul>
+                                    <li>
+                                        <label for="Jessica Andradre">Jessica Andradre</label>
+                                    </li>
+                                    <li>
+                                        <label for="Erin Blanchfield">Erin Blanchfield</label>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="box">
+                                <h2>Last 5 fights</h2>
+                                <ul>
+                                    <li>
+                                        <label for="Jordan Wright">Jordan Wright</label>
+                                    </li>
+                                    <li>
+                                        <label for="Zac Pauga">Zac Pauga</label>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="box">
+                                <h2>Strike Accuracy</h2>
+                                <ul>
+                                    <li>
+                                        <label for="Josh Parisian">Josh Parisian</label>
+                                    </li>
+                                    <li>
+                                        <label for="Jamal Pogues">Jamal Pogues</label>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="box">
+                                <h2>Takedown Accuracy</h2>
+                                <ul>
+                                    <li>
+                                        <label for="William Knight">William Knight</label>
+                                    </li>
+                                    <li>
+                                        <label for="Marcin Prachnio">Marcin Prachnio</label>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="boxes-container">
+                        <h1>Erin Blanchfield</h1>
+                        <div class="inner-container">
+                            <div class="box">
+                                <h2>Record</h2>
+                                <ul>
+                                    <li>
+                                        <label for="Nazim Sadykhov">Nazim Sadykhov</label>
+                                    </li>
+                                    <li>
+                                        <label for="Evan Elder">Evan Elder</label>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="box">
+                                <h2>Last 5 Fights</h2>
+                                <ul>
+                                    <li>
+                                        <label for="Lina Lansberg">Lina Lansberg</label>
+                                    </li>
+                                    <li>
+                                        <label for="Mayra Bueno Silva">Mayra Bueno Silva</label>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="box">
+                                <h2>Strike Accuracy</h2>
+                                <ul>
+                                    <li>
+                                        <label for="Jamall Emmers">Jamall Emmers</label>
+                                    </li>
+                                    <li>
+                                        <label for="Khusein Askhabov">Khusein Askhabov</label>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="box">
+                                <h2>Takedown Accuracy</h2>
+                                <ul>
+                                    <li>
+                                        <label for="Ovince Saint Preux">Ovince Saint Preux</label>
+                                    </li>
+                                    <li>
+                                        <label for="Philipe Lins">Philipe Lins</label>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="t-center">
+                    <input type="submit" value="Save Choices">
+                </div>
+            </form>
+        </div>
+    </main>
+    <script src="{% static 'js.js' %}"></script>
+</body>
+
+</html>

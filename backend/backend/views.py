@@ -358,6 +358,6 @@ def postjoinleague(request):
 
 
 
-def membersselections(request):
+def andradre_blanchfield(request):
   
-  return render(request, "membersselections.html")
+  return render(request, "andradre_blanchfield.html")
