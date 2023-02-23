@@ -63,11 +63,12 @@ h2 {
             <div class="t-center">
                 <h1>Andradre v Blanchfield</h1>
             </div>
-            <form method="post" action="{% url 'save_choices' %}"> 
+            <form method="post" action="{%}"> 
                 {% csrf_token %}
                 <div class="wrapper">
                     <div class="boxes-container">
                         <h1>Jessica Andradre</h1>
+                        <img src="{% static 'images/andradre.png' %}" alt="Andradre">
                         <div class="inner-container">
                             <div class="box">
                                 <h2>Record</h2>
@@ -118,6 +119,7 @@ h2 {
                     </div>
                     <div class="boxes-container">
                         <h1>Erin Blanchfield</h1>
+                        <img src="{% static 'images/blanchfield.png' %}" alt="blanchfield">
                         <div class="inner-container">
                             <div class="box">
                                 <h2>Record</h2>
