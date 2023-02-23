@@ -52,35 +52,6 @@
       background-color: #ddd;
       color: black;
     }
-    table {
-    border-collapse: collapse;
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    }
-    th, td {
-      text-align: left;
-      padding: 8px;
-      border: 1px solid #ddd;
-    }
-    th {
-      background-color: #f2f2f2;
-      font-weight: bold;
-    }
-    tr:nth-child(even) {
-      background-color: #f2f2f2;
-    }
-    tr:hover {
-      background-color: #ddd;
-    }
-    a {
-      text-decoration: none;
-      color: #0d6efd;
-      font-weight: bold;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
   </style>
 </head>
 <body>
@@ -100,41 +71,19 @@
     <a href="/leaguetable">League Table</a>
 
   </div>
-  <div class="content">
-    {% block content %}{% endblock %}
-    </div>
-
-    {% for league in data %}
-    <div style="text-align: center;">
-      <h1>The {{ league.name }} league</h1>
-    </div>
-  <table class="center">
-    <thead>
-      <tr>
-        <th>Rank</th>
-        <th>User</th>
-        <th>Points</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for member in league.members %}
-        <tr>
-          <td>{{ forloop.counter }}</td>
-          <td>{{ member.name }}</td>
-          {% if member%}
-            <td>{{ member.points }}</a></td>
-          {% else %}
-            <td>No Selections Made</td>
-          {% endif %}
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <br><br>
-{% endfor %}
 
 
+<br><br>
+<H1>Points System</H1>
+<p>Our points system rewards the users knowledge of mma and how much risk theyre willing to take. Users have got to take a fighter's potential fight value into account versus their opponent.
+     Our algorithm takes the fighters previous 5 fights, 
+   the fighters takedowns per fight on average and the fighters strike accuracy into account to generate their potential points for a win.
+    From the last five of each fighter's fights, 1 point is added to their potential score for each loss and 1 point is taken away for each win. The algorithm also adds and
+deducts points where relevant to the fighter that has a worse overall strike and takedown accuracy </p>
 
-  
+
+</body>
+
+
 </body>
 </html>

@@ -37,7 +37,9 @@ urlpatterns = [
     path('fighter_selection',views.fighter_selection, name="fighter_selection"),
     path('membersselections',views.membersselections, name="membersselections"),
     path('home',views.home, name="home"),
-    path('points_earned',views.points_earned, name="points_earned")
+    path('points_earned',views.points_earned, name="points_earned"),
+    path('pointsystem',views.pointsystem, name="pointsystem")
+
 
     
 

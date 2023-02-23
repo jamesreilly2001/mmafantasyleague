@@ -71,6 +71,10 @@ def signUp(request):
 
   return render(request, "signUp.html")
 
+def pointsystem(request):
+
+  return render(request, "pointsystem.html")
+
 def home(request): 
   if 'uid' in request.session:
     return render(request,"welcome.html")
@@ -218,6 +222,7 @@ def points_earned(request):
         else:
           eleventhfight="Loss"
         
+        database.child("users").child(encoded_email).child("points").update({"total_points": total_points})
 
         print(total_points)
         return render(request, "points_earned.html", {'total_points': total_points, 'firstfight': firstfight, 'secondfight': secondfight, 'thirdfight': thirdfight, 'fourthfight': fourthfight, 'fifthfight': fifthfight, 'sixthfight': sixthfight, 'seventhfight': seventhfight, 'eightfight': eightfight, 'ninthfight': ninthfight, 'tenthfight': tenthfight, 'eleventhfight': eleventhfight })
@@ -239,45 +244,47 @@ def fighter_selection(request):
 
 
 def leaguetable(request):
-  if 'uid' in request.session:
-    id_token = request.session['uid']
-    email = request.session.get("email")
-    encoded_email = email.replace('.', ',')
-    try:
-      leagues = database.child("leagues").get().val()
-      leagues_dict = dict(leagues)  # Convert to a dictionary
-      data = []
-      for league_id, league in leagues_dict.items():
-          if 'members' in league and email in league['members']:
-              print('User is a member of league:', league['leaguename'])
-              league_data = {'name': league['leaguename'], 'members': []}
-              for member in league['members']:
-                  if member is None:
-                      continue
-                  print('Processing member:', member)
-                  member_data = {'name': member, 'fighter_selections_link': None}
-                  member_encoded_email = member.replace('.', ',')
-                  if database.child("users").child(member_encoded_email).child("fighter selections").get().val() is not None:
-                      member_data['fighter_selections_link'] = reverse('membersselections')
-                  league_data['members'].append(member_data)
-              data.append(league_data)
-      if not data:
-        message="You are not part of any leagues, join or create a league."
-        return render(request, "welcome.html", {"messg":message})
-        
-      return render(request, 'leaguetable.html', {'data': data})
-      
-    except:
-      message="You are not part of any leagues, join or create a league."
-      print( database.child("users").child(encoded_email).child("fighter selections").get().val() )
-      return render(request, "joinleague.html", {"messg":message})
-  else:
-    message="You are logged out, to continue log back in!"
-    return render(request,"signIn.html")
+    if 'uid' in request.session:
+        id_token = request.session['uid']
+        email = request.session.get("email")
+        encoded_email = email.replace('.', ',')
+        try:
+            leagues = database.child("leagues").get().val()
+            leagues_dict = dict(leagues)  # Convert to a dictionary
+            data = []
+            for league_id, league in leagues_dict.items():
+                if 'members' in league and email in league['members']:
+                    print('User is a member of league:', league['leaguename'])
+                    league_data = {'name': league['leaguename'], 'members': []}
+                    for member in league['members']:
+                        if member is None:
+                            continue
+                        print('Processing member:', member)
+                        member_encoded_email = member.replace('.', ',')
+                        points = database.child("users").child(member_encoded_email).child("points").child("total_points").get().val()
+                        if points is None:
+                            points = 0 
+                        member_data = {'name': member, 'points': points}
+                        print(member_data)
+                        league_data['members'].append(member_data)
 
+                    # Sort members based on their points
+                    league_data['members'] = sorted(league_data['members'], key=lambda x: x['points'], reverse=True)
 
+                    data.append(league_data)
+            if not data:
+                message="You are not part of any leagues, join or create a league."
+                return render(request, "welcome.html", {"messg":message})
 
+            return render(request, 'leaguetable.html', {'data': data})
 
+        except:
+            message="You are not part of any leagues, join or create a league."
+            print( database.child("users").child(encoded_email).child("fighter selections").get().val() )
+            return render(request, "joinleague.html", {"messg":message})
+    else:
+        message="You are logged out, to continue log back in!"
+        return render(request,"signIn.html")
 
    
 
