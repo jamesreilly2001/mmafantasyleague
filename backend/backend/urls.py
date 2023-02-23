@@ -35,10 +35,12 @@ urlpatterns = [
     path('leaguetable',views.leaguetable, name="leaguetable"),
     path('save_choices',views.save_choices, name="save_choices"),
     path('fighter_selection',views.fighter_selection, name="fighter_selection"),
-    path('membersselections',views.membersselections, name="membersselections"),
     path('home',views.home, name="home"),
     path('points_earned',views.points_earned, name="points_earned"),
-    path('pointsystem',views.pointsystem, name="pointsystem")
+    path('pointsystem',views.pointsystem, name="pointsystem"),
+    path('andradre_blanchfield',views.andradre_blanchfield, name="andradre_blanchfield")
+
+
 
 
     
