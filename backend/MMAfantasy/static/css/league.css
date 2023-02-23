@@ -1,0 +1,52 @@
+body {
+    height: 100vh;
+    background: linear-gradient(#353535b3, #303030b3), url('../images/bg.jpg');
+    background-size: cover;
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+.header .container {
+    background: inherit;
+}
+
+main {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
+
+main .container {
+    width: unset;
+}
+
+main .inner-container {
+    background: var(--srColor);
+    padding: 40px 20px;
+    text-align: center;
+    min-width: max-content;
+}
+
+main .inner-container .content {
+    font-size: 38px;
+}
+
+.inner-container form input {
+    height: 40px;
+    border: none;
+    font-size: 16px;
+    letter-spacing: .5px;
+    background: #ffffffad;
+    transition: .2s ease;
+    margin: 5px 0;
+    padding: 0 20px;
+}
+
+.inner-container form input[type="submit"] {
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.inner-container form input[type="submit"]:hover {
+    background: white;
+}

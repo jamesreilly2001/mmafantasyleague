@@ -1,0 +1,87 @@
+main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: url(../images/wave.svg) no-repeat center bottom;
+    background-size: contain;
+}
+
+main .log-box {
+    width: 90%;
+    max-width: 800px;
+    background-color: var(--prBgColor);
+    box-shadow: 5px 5px 30px #9999998f;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    align-items: center;
+}
+
+main .log-box .left {
+    width: 100%;
+    height: 100%;
+    background-color: var(--srColor);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+main .left .content {
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+}
+
+main .left .inner-left-container {
+    text-align: center;
+}
+
+main .log-box .left .inp-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+main .log-box .left .inp-container * {
+    height: 40px;
+    padding: 0 0 0 10px;
+    border: none;
+    font-size: 15px;
+}
+
+main .log-box .left .inp-buttons * {
+    width: 150px;
+    height: 40px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    letter-spacing: .5px;
+    background: #ffffffad;
+    transition: .2s ease;
+    margin: 5px 0;
+}
+
+main .log-box .left .inp-buttons *:hover {
+    background: white;
+}
+
+main .log-box .right {
+    background: linear-gradient(to bottom right, #80808000 50%, #d7d7d7 50%);
+}
+
+main .log-box .right img {
+    width: 100%;
+}
+
+@media only screen and (max-width: 768px) {
+    main .log-box {
+        grid-template-columns: 1fr;
+    }
+    main .log-box .right.d-flex.al-center {
+        display: none;
+    }
+    main .log-box .left {
+        padding: 70px 20px;
+    }
+}

@@ -149,7 +149,7 @@ def save_choices(request):
                 database.child("users").child(encoded_email).child("fighter selections").set(data)
 
                 message = "Fighter choices saved"
-                return render(request, "choosefighters.html", {"messg": message})
+                return render(request, "welcome.html", {"messg": message})
         else:
             message = "Invalid request method"
             return render(request, "choosefighters.html", {"messg": message})
@@ -305,7 +305,7 @@ def postcreateleague(request):
         database.child("leagues").child(leaguename).set(data)
         print(uniquecode)
         print(leaguename)
-        return redirect('choosefighters',)
+        return redirect('leaguetable',)
     except:
         message="Unable to create account try again"
         return render(request,"signup.html",{"messg":message})

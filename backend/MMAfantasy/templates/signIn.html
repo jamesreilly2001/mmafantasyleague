@@ -1,3 +1,4 @@
+{% load static %}
 {% if messg %}
 <script>
     alert('{{ messg }}');
@@ -6,56 +7,63 @@
 
 
 <!DOCTYPE html>
-<html>
-<head>
-  <title>My Website</title>
-  <style>
-    /* Add your styles here */
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #333;
-      color: #fff;
-      padding: 10px;
-    }
-    .header h1 {
-      margin: 0;
-      font-size: 24px;
-    }
-    .header a {
-      color: #fff;
-      text-decoration: none;
-    }
-    .header a:hover {
-      text-decoration: underline;
-    }
-  </style>
-</head>
-<body>
-  <div class="header">
-    <h1>UFC fantasy league</h1>
-    {% if request.session.email %}
-      <p>Logged in as {{ request.session.email }}</p>
-      <a href="{% url 'logout' %}">Logout</a>
-    {% else %}
-    <p>You're not logged in</p>
-      <a href="{% url 'signIn' %}">Sign In</a>
-    {% endif %}
-  </div>
-  <div class="content">
-    {% block content %}{% endblock %}
-    </div>
-    <br><br>
-<form action="postsign" method="post">
-    {% csrf_token %}   
-    Email : 
-    <input type="email" name="email"><br><br>
-    Password : 
-    <input type="password" name="pass"><br><br>
-    <input type="submit" value="SignIn">
-    <button type="button" onclick="location.href='{% url 'signUp' %}'">Sign up</button>
-</form>
-</body>
-</html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/log.css'%}">
+</head>
+
+<body>
+     <div class="header">
+        <div class="container">
+            <div class="left">
+                <div class="logo-container">
+                    <img src="{% static 'images/logo.png' %}" alt="log">
+                </div>
+                <h1>UFC fantasy league</h1>
+            </div>
+            <div class="right">
+                <nav>
+                    {% if request.session.email %}
+                    <p>Logged in as {{ request.session.email }}</p>
+                    <a href="{% url 'logout' %}">Logout</a> {% else %}
+                    <p>You're not logged in</p> {% endif %}
+                </nav>
+            </div>
+        </div>
+    </div> 
+    <main>
+        <div class="log-box">
+            <div class="left">
+                <div class="inner-left-container">
+                    <div class="content">
+                        Sign In {% block content %}{% endblock %}
+                    </div>
+                    <br><br>
+                    <form action="postsign" method="post">
+                        {% csrf_token %}
+                        <div class="inp-container">
+                            <input type="email" name="email" placeholder="Email">
+                            <input type="password" name="pass" placeholder="Password">
+                        </div>
+                        <div class="inp-buttons">
+                            <input type="submit" value="Sign In">
+                            <button type="button" onclick="location.href='{% url 'signUp' %}'">Sign up</button> 
+                            
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="right d-flex al-center">
+                <img src="{% static 'images/player-vector.png' %}" alt="player">            
+        </div>
+    </main>
+    <script src="{% static 'js.js' %}"></script>
+</body>
+
+</html>
