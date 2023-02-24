@@ -167,72 +167,72 @@ def points_earned(request):
         total_points = 0
         if 'andradre-blanchfield' in fighters_selected and fighters_selected['andradre-blanchfield'] == "Erin Blanchfield":
           total_points = total_points + 5
-          secondfight = "Win"
+          secondfight = "Blanchfield win : 5 points"
         else:
           total_points = total_points + 0
-          secondfight = "Loss"
+          secondfight = " Andradre Loss : 0 points"
           
         if 'wright-pauga' in fighters_selected and fighters_selected['wright-pauga'] == "Jordan Wright":
           total_points = total_points + 6
-          firstfight = "Win"
+          firstfight = "Wright Win : 6 points"
         else:
           total_points = total_points + 0
-          firstfight = "Loss"
+          firstfight = "Pauga Loss : 0 points"
         if 'parisian-pogues' in fighters_selected and fighters_selected['parisian-pogues'] == "Jamal Pogues":
           total_points = total_points + 5
-          thirdfight = "Win"
+          thirdfight = "Pogues Win : 5 points"
         else:
           total_points = total_points + 0
-          thirdfight="Loss"
+          thirdfight="Parisian Loss : 0 points"
         if 'knight-prachnio' in fighters_selected and fighters_selected['knight-prachnio'] == "Marchin Prachnio":
             total_points = total_points + 6
-            fourthfight="WIN"
+            fourthfight="Prachnio win : 6 points"
         else:
           total_points = total_points + 0
-          fourthfight="Loss"
+          fourthfight="Knight Loss : 0 points"
         if 'miller-hernandez' in fighters_selected and fighters_selected['miller-hernandez'] == "Alexander Hernandez":
           total_points = total_points + 7
-          fifthfight="Win"
+          fifthfight="Hernandez Win : 7 points"
         else:
           total_points = total_points + 0
-          fifthfight="Loss"
+          fifthfight="Miller Loss : 0 points"
         if 'sadykhov-elder' in fighters_selected and fighters_selected['sadykhov-elder'] == "Nazim Sadykhov":
             total_points = total_points + 8
-            sixthfight="Win"
+            sixthfight="Sadykhov Win : 8 points"
         else:
             total_points = total_points + 0
-            sixthfight="Loss"
+            sixthfight="Elder Loss : 0 points"
         if 'lansberg-silva' in fighters_selected and fighters_selected['lansberg-silva'] == "Mayra Bueno Silva":
           total_points = total_points + 5
-          seventhfight="Win"
+          seventhfight="Silva Win : 5 points"
         else:
           total_points = total_points + 0
-          seventhfight="Loss"
+          seventhfight="Lansberg Loss : 0 points"
         if 'emmers-askabov' in fighters_selected and fighters_selected['emmers-askabov'] == "Jamall Emmers":
             total_points = total_points + 7
-            eightfight="Win"
+            eightfight="Emmers Win : 7 points"
         else:
-            eightfight="Loss"
+            eightfight="Askabov Loss : 0 points"
             total_points = total_points + 0
 
         if 'preux-lins' in fighters_selected and fighters_selected['preux-lins'] == "Philipe Lins":
           total_points = total_points + 6
-          ninthfight="Win"
+          ninthfight="Lins Win : 6 points"
         else:
-          ninthfight="Loss"
+          ninthfight="Preux Loss : 0 points"
           total_points = total_points + 0
 
         if 'fletcher-gorimbo' in fighters_selected and fighters_selected['fletcher-gorimbo'] == "AJ Fletcher":
             total_points = total_points + 8
-            tenthfight="Win"
+            tenthfight="Fletcher Win : 8 points"
         else:
             total_points = total_points + 0
-            tenthfight="Loss"
+            tenthfight="Gorimbo Loss"
         if 'carpenter-ronderos' in fighters_selected and fighters_selected['carpenter-ronderos'] == "Clayton Carpenter":
           total_points = total_points + 6
-          eleventhfight="Win"
+          eleventhfight="Carpenter Win : 6 points"
         else:
-          eleventhfight="Loss"
+          eleventhfight="Ronderos Loss : 0 points"
           total_points = total_points + 0
 
         
