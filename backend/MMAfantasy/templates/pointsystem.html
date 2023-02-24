@@ -1,3 +1,4 @@
+
 {% if messg %}
 <script>
     alert('{{ messg }}');
@@ -6,81 +7,130 @@
 
 
 
-
-
-
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <title>My Website</title>
-  <style>
-    /* Add your styles here */
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #333;
-      color: #fff;
-      padding: 10px;
-    }
-    .header h1 {
-      margin: 0;
-      font-size: 24px;
-    }
-    .header a {
-      color: #fff;
-      text-decoration: none;
-      margin-right: 10px;
-    }
-    .header a:hover {
-      text-decoration: underline;
-    }
-    .navbar {
-      background-color: #555;
-      overflow: hidden;
-      margin-bottom: 10px;
-    }
-    .navbar a {
-      float: left;
-      display: block;
-      color: #fff;
-      text-align: center;
-      padding: 14px 16px;
-      text-decoration: none;
-    }
-    .navbar a:hover {
-      background-color: #ddd;
-      color: black;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+    <style>
+        body {
+            height: 100vh;
+            background: linear-gradient(#353535b3, #303030b3), url('static/images/bg.jpg');
+            background-size: cover;
+            display: grid;
+            grid-template-rows: auto 1fr;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background-color: transparent;
+        }
+        
+        th,
+        td {
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--srColor);
+            color: black;
+        }
+        
+        tr:nth-child(even) {
+            background-color: transparent;
+        }
+        
+        main .container .t-center h1 {
+            color: white;
+            padding: 50px 0 20px 0;
+        }
+        .my-table {
+    color: white;
+    font-weight: bold;
+    background-color: transparent;
+}
+
+
+h2 {
+  color: white;
+  font-weight: bold;
+}
+ h {
+  color: white;
+  font-weight: bold;
+}
+a#choosefighters {
+  color: white;
+  font-weight: bold;
+}
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #000000;
+    background-color: #FFBF23;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+    </style>
+    <script>function redirectToChooseFighter() {
+      window.location.href = "choosefighters";
+    }</script>
 </head>
+
 <body>
-  <div class="header">
-    <h1>UFC fantasy league</h1>
-    {% if request.session.email %}
-      <p>Logged in as {{ request.session.email }}</p>
-      <a href="{% url 'logout' %}">Logout</a>
-    {% else %}
-    <p>You're not logged in</p>
-      <a href="{% url 'signIn' %}">Sign In</a>
-    {% endif %}
-  </div>
-  <div class="navbar">
-    <a href="/home">Home</a>
-    <a href="/fighter_selection">Fighter Selection</a>
-    <a href="/leaguetable">League Table</a>
+    <div class="header">
+        <div class="container">
+            <div class="left">
+                <div class="logo-container">
+                  <img src="{% static 'images/misc.png' %}" alt="log">
+                </div>
+                <h1>UFC fantasy league</h1>
+            </div>
+            <div class="right">
+                <nav>
+                    {% if request.session.email %}
+                    <p>Logged in as {{ request.session.email }}</p>
+                    <a href="{% url 'logout' %}">Logout</a> {% else %}
+                    <p>You're not logged in</p>
+                    <a href="{% url 'signIn' %}">Sign In</a> {% endif %}
+                </nav>
+                <a class="get-start-btn" href="home">Home</a>
+            </div>
+        </div>
+    </div>
+    <main>
+        
 
-  </div>
-
-
+</html>
 <br><br>
-<H1>Points System</H1>
-<p>Our points system rewards the users knowledge of mma and how much risk theyre willing to take. Users have got to take a fighter's potential fight value into account versus their opponent.
-     Our algorithm takes the fighters previous 5 fights, 
-   the fighters takedowns per fight on average and the fighters strike accuracy into account to generate their potential points for a win.
-    From the last five of each fighter's fights, 1 point is added to their potential score for each loss and 1 point is taken away for each win. The algorithm also adds and
-deducts points where relevant to the fighter that has a worse overall strike and takedown accuracy </p>
+<h2>Our points system rewards the users knowledge of mma and how much risk they're willing to take. Users have got to take a 
+  fighter's potential fight value into account versus their opponent.
+     Our algorithm takes the fighters previous 5 fight results, 
+   the fighters takedown accuracy and the fighters strike accuracy into account to generate their potential points for a win.
+    From the last five of each fighter's fights, 1 point is added to their potential score for each loss. The algorithm also adds points
+where relevant to the fighter that has a worse overall strike and takedown accuracy. This method can really display who is the favourite fghter for the fight, as the lower
+ the points rewarded, the more in favour the fighter is to win.<br><br>        Will you reap the rewards of picking an underdog, or will you play it safe and choose the favourite? </h2>     <br><br>         
+ <div class="t-center">
+  <button type="button" onclick="redirectToChooseFighter()" class="btn">DECIDE HERE!</button><br><br>  <div class="right d-flex al-center">
+    <img src="{% static 'images/player-vector.png' %}" alt="player">            
+</div>
+</div>
 
+
+<script src="{% static 'js.js' %}"></script>
 
 </body>
 

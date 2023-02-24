@@ -21,6 +21,13 @@
 h2 {
   display: inline-block; /* or display: block; if necessary */
 }
+.points-box {
+        background-color: white;
+    }
+    .points-box h1, .points-box label {
+        color: rgb(120, 34, 34);
+        font-weight: bold;
+    }
 </style>
 <head>
     <meta charset="UTF-8">
@@ -32,7 +39,9 @@ h2 {
 
 
 </head>
-
+<script>function redirectToChooseFighters() {
+    window.location.href = "choosefighters";
+  }</script>
 <body>
     <div class="header">
         <div class="container">
@@ -61,7 +70,7 @@ h2 {
             </div>
             <br><br>
             <div class="t-center">
-                <h1>Andradre v Blanchfield</h1>
+                <h1>Andradre v Blanchfield<br>Flyweight Bout</h1>
             </div>
             <form method="post" action="{%}"> 
                 {% csrf_token %}
@@ -74,45 +83,41 @@ h2 {
                                 <h2>Record</h2>
                                 <ul>
                                     <li>
-                                        <label for="Jessica Andradre">Jessica Andradre</label>
+                                        <label for="REC">24-10-0 (W-L-D)</label>
                                     </li>
-                                    <li>
-                                        <label for="Erin Blanchfield">Erin Blanchfield</label>
-                                    </li>
+                                    
                                 </ul>
                             </div>
                             <div class="box">
                                 <h2>Last 5 fights</h2>
                                 <ul>
                                     <li>
-                                        <label for="Jordan Wright">Jordan Wright</label>
+                                        <label for="F">W L W W W</label>
                                     </li>
-                                    <li>
-                                        <label for="Zac Pauga">Zac Pauga</label>
-                                    </li>
+                                    
                                 </ul>
                             </div>
                             <div class="box">
                                 <h2>Strike Accuracy</h2>
                                 <ul>
                                     <li>
-                                        <label for="Josh Parisian">Josh Parisian</label>
+                                        <label for="SAA">51%</label>
                                     </li>
-                                    <li>
-                                        <label for="Jamal Pogues">Jamal Pogues</label>
-                                    </li>
+                                    
                                 </ul>
                             </div>
                             <div class="box">
                                 <h2>Takedown Accuracy</h2>
                                 <ul>
                                     <li>
-                                        <label for="William Knight">William Knight</label>
+                                        <label for="TAK">55%</label>
                                     </li>
-                                    <li>
-                                        <label for="Marcin Prachnio">Marcin Prachnio</label>
-                                    </li>
+                                    
                                 </ul>
+                            </div>
+                            <div class="box points-box">
+                                <h1>Points: 8</h1>
+                                
                             </div>
                             
                         </div>
@@ -125,52 +130,48 @@ h2 {
                                 <h2>Record</h2>
                                 <ul>
                                     <li>
-                                        <label for="Nazim Sadykhov">Nazim Sadykhov</label>
+                                        <label for="wld">11-1-0 (W-L-D)</label>
                                     </li>
-                                    <li>
-                                        <label for="Evan Elder">Evan Elder</label>
-                                    </li>
+                                    
                                 </ul>
                             </div>
                             <div class="box">
                                 <h2>Last 5 Fights</h2>
                                 <ul>
                                     <li>
-                                        <label for="Lina Lansberg">Lina Lansberg</label>
+                                        <label for="WWWWW">W W W W W</label>
                                     </li>
-                                    <li>
-                                        <label for="Mayra Bueno Silva">Mayra Bueno Silva</label>
-                                    </li>
+                                    
                                 </ul>
                             </div>
                             <div class="box">
                                 <h2>Strike Accuracy</h2>
                                 <ul>
                                     <li>
-                                        <label for="Jamall Emmers">Jamall Emmers</label>
+                                        <label for="SA">54%</label>
                                     </li>
-                                    <li>
-                                        <label for="Khusein Askhabov">Khusein Askhabov</label>
-                                    </li>
+                                    
                                 </ul>
                             </div>
                             <div class="box">
                                 <h2>Takedown Accuracy</h2>
                                 <ul>
                                     <li>
-                                        <label for="Ovince Saint Preux">Ovince Saint Preux</label>
+                                        <label for="TA">63%</label>
                                     </li>
-                                    <li>
-                                        <label for="Philipe Lins">Philipe Lins</label>
-                                    </li>
+                                    
                                 </ul>
+                            </div>
+                            <div class="box points-box">
+                                <h1>Points: 5</h1>
+                                
                             </div>
                             
                         </div>
                     </div>
-                </div>
+                </div> <br>
                 <div class="t-center">
-                    <input type="submit" value="Save Choices">
+                    <button type="button" onclick="redirectToChooseFighters()" class="btn">Back to Choose Fighters</button><br><br>
                 </div>
             </form>
         </div>

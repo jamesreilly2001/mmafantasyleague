@@ -51,7 +51,7 @@
             </div>
             <br><br>
             <div class="t-center">
-                <h1>UFC Fight Night Andradre v Blanchfield</h1>
+                <h1>UFC Fight Night Andradre v Blanchfield</h1><br><a href="/pointsystem" id="choosefighters">CLICK HERE TO VIEW HOW OUR POINTS ALGORITHM WORKS</a>
             </div>
             <form method="post" action="{% url 'save_choices' %}"> 
                 {% csrf_token %}
@@ -60,15 +60,15 @@
                         <h1>Main Card</h1>
                         <div class="inner-container">
                             <div class="box">
-                                <h2>Andradre v Blanchfield</h2>
+                                <h2><a href="andradre_blanchfield">Andradre v Blanchfield</a></h2>
                                 <ul>
                                     <li>
                                         <input type="radio" name="andradre-blanchfield" value="Jessica Andradre">
-                                        <label for="Jessica Andradre">Jessica Andradre</label>
+                                        <label for="Jessica Andradre">Jessica Andradre - 8 points</label>
                                     </li>
                                     <li>
                                         <input type="radio" name="andradre-blanchfield" value="Erin Blanchfield">
-                                        <label for="Erin Blanchfield">Erin Blanchfield</label>
+                                        <label for="Erin Blanchfield">Erin Blanchfield - 5 points</label>
                                     </li>
                                 </ul>
                             </div>
@@ -77,11 +77,11 @@
                                 <ul>
                                     <li>
                                         <input type="radio" name="wright-pauga" value="Jordan Wright">
-                                        <label for="Jordan Wright">Jordan Wright</label>
+                                        <label for="Jordan Wright">Jordan Wright - 6 points</label>
                                     </li>
                                     <li>
                                         <input type="radio" name="wright-pauga" value="Zac Pauga">
-                                        <label for="Zac Pauga">Zac Pauga</label>
+                                        <label for="Zac Pauga">Zac Pauga - 6 points</label>
                                     </li>
                                 </ul>
                             </div>
@@ -90,11 +90,11 @@
                                 <ul>
                                     <li>
                                         <input type="radio" name="parisian-pogues" value="Josh Parisian">
-                                        <label for="Josh Parisian">Josh Parisian</label>
+                                        <label for="Josh Parisian">Josh Parisian - 7 points</label>
                                     </li>
                                     <li>
                                         <input type="radio" name="parisian-pogues" value="Jamal Pogues">
-                                        <label for="Jamal Pogues">Jamal Pogues</label>
+                                        <label for="Jamal Pogues">Jamal Pogues - 5 points</label>
                                     </li>
                                 </ul>
                             </div>
@@ -103,11 +103,11 @@
                                 <ul>
                                     <li>
                                         <input type="radio" name="knight-prachnio" value="William Knight">
-                                        <label for="William Knight">William Knight</label>
+                                        <label for="William Knight">William Knight - 7 points</label>
                                     </li>
                                     <li>
                                         <input type="radio" name="knight-prachnio" value="Marcin Prachnio">
-                                        <label for="Marcin Prachnio">Marcin Prachnio</label>
+                                        <label for="Marcin Prachnio">Marcin Prachnio - 6 points</label>
                                     </li>
                                 </ul>
                             </div>
@@ -116,11 +116,11 @@
                                 <ul>
                                     <li>
                                         <input type="radio" name="miller-hernandez" value="Jim Miller">
-                                        <label for="Jim Miller">Jim Miller</label>
+                                        <label for="Jim Miller">Jim Miller - 6 points</label>
                                     </li>
                                     <li>
                                         <input type="radio" name="miller-hernandez" value="Alexander Hernandez">
-                                        <label for="Alexander Hernandez">Alexander Hernandez</label>
+                                        <label for="Alexander Hernandez">Alexander Hernandez - 7 points</label>
                                     </li>
                                 </ul>
                             </div>
@@ -134,11 +134,11 @@
                                 <ul>
                                     <li>
                                         <input type="radio" name="sadykhov-elder" value="Nazim Sadykhov">
-                                        <label for="Nazim Sadykhov">Nazim Sadykhov</label>
+                                        <label for="Nazim Sadykhov">Nazim Sadykhov - 8 points</label>
                                     </li>
                                     <li>
                                         <input type="radio" name="sadykhov-elder" value="Evan Elder">
-                                        <label for="Evan Elder">Evan Elder</label>
+                                        <label for="Evan Elder">Evan Elder - 6 points</label>
                                     </li>
                                 </ul>
                             </div>
@@ -147,11 +147,11 @@
                                 <ul>
                                     <li>
                                         <input type="radio" name="wlansberg-silva" value="Lina Lansberg">
-                                        <label for="Lina Lansberg">Lina Lansberg</label>
+                                        <label for="Lina Lansberg">Lina Lansberg - 8 points</label>
                                     </li>
                                     <li>
                                         <input type="radio" name="wlansberg-silva" value="Mayra Bueno Silva">
-                                        <label for="Mayra Bueno Silva">Mayra Bueno Silva</label>
+                                        <label for="Mayra Bueno Silva">Mayra Bueno Silva - 5 points</label>
                                     </li>
                                 </ul>
                             </div>
@@ -160,11 +160,11 @@
                                 <ul>
                                     <li>
                                         <input type="radio" name="emmers-askhabov" value="Jamall Emmers">
-                                        <label for="Jamall Emmers">Jamall Emmers</label>
+                                        <label for="Jamall Emmers">Jamall Emmers - 7 points</label>
                                     </li>
                                     <li>
                                         <input type="radio" name="emmers-askhabov" value="Khusein Askhabov">
-                                        <label for="Khusein Askhabov">Khusein Askhabov</label>
+                                        <label for="Khusein Askhabov">Khusein Askhabov - 5 points </label>
                                     </li>
                                 </ul>
                             </div>
@@ -173,11 +173,11 @@
                                 <ul>
                                     <li>
                                         <input type="radio" name="preux-lins" value="Ovince Saint Preux">
-                                        <label for="Ovince Saint Preux">Ovince Saint Preux</label>
+                                        <label for="Ovince Saint Preux">Ovince Saint Preux - 5 points</label>
                                     </li>
                                     <li>
                                         <input type="radio" name="preux-lins" value="Philipe Lins">
-                                        <label for="Philipe Lins">Philipe Lins</label>
+                                        <label for="Philipe Lins">Philipe Lins - 6 points</label>
                                     </li>
                                 </ul>
                             </div>
@@ -186,11 +186,11 @@
                                 <ul>
                                     <li>
                                         <input type="radio" name="fletcher-gorimbo" value="AJ Fletcher">
-                                        <label for="AJ Fletcher">AJ Fletcher</label>
+                                        <label for="AJ Fletcher">AJ Fletcher - 8 points</label>
                                     </li>
                                     <li>
                                         <input type="radio" name="fletcher-gorimbo" value="Themba Gorimbo">
-                                        <label for="Themba Gorimbo">Themba Gorimbo</label>
+                                        <label for="Themba Gorimbo">Themba Gorimbo - 5 points</label>
                                     </li>
                                 </ul>
                             </div>
@@ -199,11 +199,11 @@
                                 <ul>
                                     <li>
                                         <input type="radio" name="carpenter-ronderos" value="Clayton Carpenter">
-                                        <label for="Clayton Carpenter">Clayton Carpenter</label>
+                                        <label for="Clayton Carpenter">Clayton Carpenter - 6 points</label>
                                     </li>
                                     <li>
                                         <input type="radio" name="carpenter-ronderos" value="Juancamilo Ronderos">
-                                        <label for="Juancamilo Ronderos">Juancamilo Ronderos</label>
+                                        <label for="Juancamilo Ronderos">Juancamilo Ronderos - 7 points</label>
                                     </li>
                                 </ul>
                             </div>
@@ -213,6 +213,7 @@
                 <div class="t-center">
                     <input type="submit" value="Save Choices">
                 </div>
+                <br><br>
             </form>
         </div>
     </main>

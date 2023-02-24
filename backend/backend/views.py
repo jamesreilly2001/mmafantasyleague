@@ -48,7 +48,7 @@ def postsignup(request):
    message="Unable to create account try again"
    return render(request,"signup.html",{"messg":message})
 
- return render(request,"signIn.html")
+ return render(request,"welcome.html")
 
 def signIn(request): 
 
@@ -166,61 +166,75 @@ def points_earned(request):
         # Define a dictionary of the points awarded for each fighter in each match
         total_points = 0
         if 'andradre-blanchfield' in fighters_selected and fighters_selected['andradre-blanchfield'] == "Erin Blanchfield":
-          total_points = total_points + 4
+          total_points = total_points + 5
           secondfight = "Win"
         else:
+          total_points = total_points + 0
           secondfight = "Loss"
           
         if 'wright-pauga' in fighters_selected and fighters_selected['wright-pauga'] == "Jordan Wright":
-          total_points = total_points + 4
+          total_points = total_points + 6
           firstfight = "Win"
         else:
+          total_points = total_points + 0
           firstfight = "Loss"
         if 'parisian-pogues' in fighters_selected and fighters_selected['parisian-pogues'] == "Jamal Pogues":
-          total_points = total_points + 4
+          total_points = total_points + 5
           thirdfight = "Win"
         else:
+          total_points = total_points + 0
           thirdfight="Loss"
         if 'knight-prachnio' in fighters_selected and fighters_selected['knight-prachnio'] == "Marchin Prachnio":
-            total_points = total_points + 4
+            total_points = total_points + 6
             fourthfight="WIN"
         else:
+          total_points = total_points + 0
           fourthfight="Loss"
         if 'miller-hernandez' in fighters_selected and fighters_selected['miller-hernandez'] == "Alexander Hernandez":
-          total_points = total_points + 4
+          total_points = total_points + 7
           fifthfight="Win"
         else:
+          total_points = total_points + 0
           fifthfight="Loss"
         if 'sadykhov-elder' in fighters_selected and fighters_selected['sadykhov-elder'] == "Nazim Sadykhov":
-            total_points = total_points + 4
+            total_points = total_points + 8
             sixthfight="Win"
         else:
+            total_points = total_points + 0
             sixthfight="Loss"
         if 'lansberg-silva' in fighters_selected and fighters_selected['lansberg-silva'] == "Mayra Bueno Silva":
-          total_points = total_points + 4
+          total_points = total_points + 5
           seventhfight="Win"
         else:
+          total_points = total_points + 0
           seventhfight="Loss"
         if 'emmers-askabov' in fighters_selected and fighters_selected['emmers-askabov'] == "Jamall Emmers":
-            total_points = total_points + 4
+            total_points = total_points + 7
             eightfight="Win"
         else:
             eightfight="Loss"
+            total_points = total_points + 0
+
         if 'preux-lins' in fighters_selected and fighters_selected['preux-lins'] == "Philipe Lins":
-          total_points = total_points + 4
+          total_points = total_points + 6
           ninthfight="Win"
         else:
           ninthfight="Loss"
+          total_points = total_points + 0
+
         if 'fletcher-gorimbo' in fighters_selected and fighters_selected['fletcher-gorimbo'] == "AJ Fletcher":
-            total_points = total_points + 4
+            total_points = total_points + 8
             tenthfight="Win"
         else:
+            total_points = total_points + 0
             tenthfight="Loss"
         if 'carpenter-ronderos' in fighters_selected and fighters_selected['carpenter-ronderos'] == "Clayton Carpenter":
-          total_points = total_points + 4
+          total_points = total_points + 6
           eleventhfight="Win"
         else:
           eleventhfight="Loss"
+          total_points = total_points + 0
+
         
         database.child("users").child(encoded_email).child("points").update({"total_points": total_points})
 
