@@ -1,3 +1,4 @@
+import pyrebase
 firebaseConfig = {
   'apiKey': "AIzaSyD-_zfDFYhcZUDpTTaKS7I0YJahMaqiCLs",
   'authDomain': "mma-fantasy-league-94b6e.firebaseapp.com",
